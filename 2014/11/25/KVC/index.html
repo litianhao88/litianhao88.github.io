@@ -15,7 +15,7 @@
 	})();
 	</script>
   
-  <title>正则表达式 | 白驹过隙 点滴于心</title>
+  <title>KVO随笔 | 白驹过隙 点滴于心</title>
   <meta name="author" content="李天昊">
   
   <meta name="description" content="李天昊的技术博">
@@ -23,7 +23,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="正则表达式"/>
+  <meta property="og:title" content="KVO随笔"/>
   <meta property="og:site_name" content="白驹过隙 点滴于心"/>
 
   
@@ -79,36 +79,50 @@
   <div class="post-content">
     <header class="article-info clearfix">
   <h1 itemprop="name">
-	正则表达式
+	KVO随笔
   </h1>
   <p class="article-author">By
     
       <a href="www.yoursite.com" title="李天昊">李天昊</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-09-20T14:30:45.000Z" itemprop="datePublished">2014-09-20</time>
-    Update date:<time datetime="2016-07-04T14:01:12.000Z" itemprop="dateModified">2016-07-04</time>
+    <time datetime="2014-11-25T12:22:10.000Z" itemprop="datePublished">2014-11-25</time>
+    Update date:<time datetime="2016-07-04T14:05:38.000Z" itemprop="dateModified">2016-07-04</time>
     
   </p>
 </header>
     <div class="entry">
 		
-        <p>正则表达式</p>
-<p>匹配中文字符的正则表达式： [\u4e00-\u9fa5]<br>评注：匹配中文还真是个头疼的事，有了这个表达式就好办了</p>
-<p>匹配双字节字符(包括汉字在内)：[^\x00-\xff]<br>评注：可以用来计算字符串的长度（一个双字节字符长度计2，ASCII字符计1）</p>
-<p>匹配空白行的正则表达式：\n\s*\r<br>评注：可以用来删除空白行</p>
-<p>匹配HTML标记的正则表达式：&lt;(\S<em>?)[^&gt;]</em>&gt;.<em>?&lt;/\1&gt;|&lt;.</em>? /&gt;<br>评注：网上流传的版本太糟糕，上面这个也仅仅能匹配部分，对于复杂的嵌套标记依旧没有能力为力</p>
-<p>匹配首尾空白字符的正则表达式：^\s<em>|\s</em>$<br>评注：可以用来删除行首行尾的空白字符(包括空格、制表符、换页符等等)，非常有用的表达式</p>
-<p>匹配Email地址的正则表达式：\w+([-+.]\w+)<em>@\w+([-.]\w+)</em>.\w+([-.]\w+)*<br>评注：表单验证时很实用</p>
-<p>匹配网址URL的正则表达式：[a-zA-z]+://[^\s]*<br>评注：网上流传的版本功能很有限，上面这个基本可以满足需求</p>
-<p>匹配帐号是否合法(字母开头，允许5-16字节，允许字母数字下划线)：^[a-zA-Z][a-zA-Z0-9_]{4,15}$<br>评注：表单验证时很实用</p>
-<p>匹配国内电话号码：\d{3}-\d{8}|\d{4}-\d{7}<br>评注：匹配形式如 0511-4405222 或 021-87888822</p>
-<p>匹配腾讯QQ号：[1-9][0-9]{4,}<br>评注：腾讯QQ号从10000开始</p>
-<p>匹配中国邮政编码：[1-9]\d{5}(?!\d)<br>评注：中国邮政编码为6位数字</p>
-<p>匹配身份证：\d{15}|\d{18}<br>评注：中国的身份证为15位或18位</p>
-<p>匹配ip地址：\d+.\d+.\d+.\d+<br>评注：提取ip地址时有用</p>
-<p>匹配特定数字：<br>^[1-9]\d<em>$　 　 //匹配正整数<br>^-[1-9]\d</em>$ 　 //匹配负整数<br>^-?[1-9]\d<em>$　　 //匹配整数<br>^[1-9]\d</em>|0$　 //匹配非负整数（正整数 + 0）<br>^-[1-9]\d<em>|0$　　 //匹配非正整数（负整数 + 0）<br>^[1-9]\d</em>.\d<em>|0.\d</em>[1-9]\d<em>$　　 //匹配正浮点数<br>^-([1-9]\d</em>.\d<em>|0.\d</em>[1-9]\d<em>)$　 //匹配负浮点数<br>^-?([1-9]\d</em>.\d<em>|0.\d</em>[1-9]\d<em>|0?.0+|0)$　 //匹配浮点数<br>^[1-9]\d</em>.\d<em>|0.\d</em>[1-9]\d<em>|0?.0+|0$　　 //匹配非负浮点数（正浮点数 + 0）<br>^(-([1-9]\d</em>.\d<em>|0.\d</em>[1-9]\d*))|0?.0+|0$　　//匹配非正浮点数（负浮点数 + 0）<br>评注：处理大量数据时有用，具体应用时注意修正</p>
-<p>匹配特定字符串：<br>^[A-Za-z]+$　　//匹配由26个英文字母组成的字符串<br>^[A-Z]+$　　//匹配由26个英文字母的大写组成的字符串<br>^[a-z]+$　　//匹配由26个英文字母的小写组成的字符串<br>^[A-Za-z0-9]+$　　//匹配由数字和26个英文字母组成的字符串<br>^\w+$　　//匹配由数字、26个英文字母或者下划线组成的字符串 </p>
+        <p>什么是观察者模式???<br>A对B的变化感兴趣，就注册为B的观察者，当B发生变化时通知A，告知B发生了变化。这就是观察者模式。<br>观察者模式定义了一种一对多的依赖关系，让多个观察者对象同时监听某一个主题对象。这个主题对象在状态上发生变化时，会通知所有观察者对象，使它们能够自动更新自己或者做出相应的一些动作。在IOS开发中我们接触到观察者模式的实现方式有NSNotificationCenter、KVO等.</p>
+<p>通知中心<br>以NSNotificationCenter为中心，观察者往Center中注册对某个主题对象的变化感兴趣，主题对象通过NSNotificationCenter进行变化广播。所有的观察和监听行为都向同一个中心注册，所有对象的变化也都通过同一个中心向外广播。</p>
+<p>通知中心执行顺序</p>
+<p>通过NSNotificationCenter的addObserver:selector:name:object接口来注册通知中心.<br>被观察的对象，通过postNotificationName:object:userInfo:向通知中心发送某一类型通知.<br>当有通知来的时候，Center会调用观察者注册的接口来广播通知，同时传递存储着更改内容的NSNotification对象.<br>当该通知不再使用时，可以在dealloc方法里removeObserver:删除观察者.<br>KVO键值观察<br>这是一个典型的观察者模式,观察者在键值改变时会得到通知.<br>NSKeyValueObserving非正式协议定义了一种机制,它允许对象去监听其它对象的某个属性的修改.NSObject提供了一个NSKeyValueObserving协议的默认实现,它为所有对象提供了一种自动发送修改通知的能力.我们可以通过禁用自动发送通知并使用这个协议提供的方法来手动实现通知的发送,以便更精确地去处理通知.</p>
+<p>KVO的使用步骤</p>
+<p>注册需要观察的对象的属性addObserver:forKeyPath:options:context:.<br>实现observeValueForKeyPath:ofObject:change:context:方法，这个方法当观察的属性变化时会自动调用.在这个方法中还通过NSKeyValueObservingOptionNew这个参数要求把新值在dictionary中传递过来.<br>取消注册观察removeObserver:forKeyPath:context:.<br>手动设置KVO</p>
+<p>//关闭某key值的KVO</p>
+<ul>
+<li><p>(BOOL)automaticallyNotifiesObserversForKey:(NSString *)key {</p>
+<p>  BOOL automatic = YES;<br>  if ([key isEqualToString:@”age”]) {</p>
+<pre><code>automatic = NO;
+</code></pre><p>  } else {</p>
+<pre><code>automatic = [super automaticallyNotifiesObserversForKey:key];
+</code></pre><p>  }<br>  return automatic;<br>}</p>
+</li>
+</ul>
+<p>//重写setter方法手动设置KVO</p>
+<ul>
+<li><p>(void)setAge:(int)age {</p>
+<p>  //手动设置KVO</p>
+<p>  if (_age != age) {</p>
+<pre><code>[self willChangeValueForKey:@&quot;age&quot;];
+
+_age = age;
+
+[self didChangeValueForKey:@&quot;age&quot;];
+</code></pre><p>  }<br>}<br>KVO的实现原理</p>
+</li>
+</ul>
+<p>当某一个类的实例第一次使用KVO的时候，系统就会在运行期间动态的创建该类的一个派生类，该类的命名规则一般是以NSKVONotifying为前缀，以原本的类名为后缀。并且将原型的对象的isa指针指向该派生类。同时在派生类中重载了使用KVO的属性的setter方法，在重载的setter方法中实现真正的通知机制，正如前面我们手动实现KVO一样。这么做是基于设置属性会调用 setter 方法，而通过重写就获得了 KVO 需要的通知机制。当然前提是要通过遵循 KVO 的属性设置方式来变更属性值，如果仅是直接修改属性对应的成员变量，是无法实现 KVO 的。</p>
 
     </div>
     <footer>
@@ -116,7 +130,7 @@
         
   
   <div class="tags">
-    <a href="/tags/正则表达式/">正则表达式</a>
+    <a href="/tags/KVO/">KVO</a>
   </div>
 
 		<div class="bdsharebuttonbox">
@@ -164,10 +178,8 @@ with(document)0[
 
  <nav id="pagination" >
     
-    <a href="/2014/11/25/KVC/" class="alignleft prev" title="KVO随笔">KVO随笔</a>
     
-    
-    <a href="/2014/08/20/runloop/" class="alignright next" title="贝塞尔曲线（UIBezierPath）属性、方法汇总">贝塞尔曲线（UIBezierPath）属性、方法汇总</a>
+    <a href="/2014/09/20/zhengzebiaodashi/" class="alignright next" title="正则表达式">正则表达式</a>
     
     <div class="clearfix"></div>
 </nav>
@@ -177,7 +189,7 @@ with(document)0[
 	
 	<section id="comment">
 		<!-- 多说评论框 start -->
-		<div class="ds-thread" data-thread-key="2014/09/20/zhengzebiaodashi/" data-title="正则表达式" data-url="www.yoursite.com/2014/09/20/zhengzebiaodashi/"></div>
+		<div class="ds-thread" data-thread-key="2014/11/25/KVC/" data-title="KVO随笔" data-url="www.yoursite.com/2014/11/25/KVC/"></div>
 		<!-- 多说评论框 end -->
 		<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 		<script type="text/javascript">
