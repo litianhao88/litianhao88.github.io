@@ -1,0 +1,276 @@
+
+
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script type="text/javascript" src="http://tajs.qq.com/stats?sId=44218032" charset="UTF-8"></script>
+  <script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?7192fa361f5cabb11d8a22de41c1ba8f";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+  
+  <title>runloop备忘 | 白驹过隙 点滴于心</title>
+  <meta name="author" content="李天昊">
+  
+  <meta name="description" content="李天昊的技术博">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="runloop备忘"/>
+  <meta property="og:site_name" content="白驹过隙 点滴于心"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/imgs/favicon.ico" rel="icon" type="image/x-ico">
+  <link rel="alternate" href="/atom.xml" title="白驹过隙 点滴于心" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//libs.baidu.com/jquery/1.8.0/jquery.min.js"></script>
+</head>
+
+
+<body>
+  <header><div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/imgs/logo.png" alt="白驹过隙 点滴于心" title="白驹过隙 点滴于心"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name">白驹过隙 点滴于心</h1>
+				<h2 class="blog-motto">Talk is cheap. Show me the code!</h2>
+			</div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li> <a href="/atom.xml">RSS</a> </li>
+				</ul>
+			</nav>			
+</div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header class="article-info clearfix">
+  <h1 itemprop="name">
+	runloop备忘
+  </h1>
+  <p class="article-author">By
+    
+      <a href="www.yoursite.com" title="李天昊">李天昊</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-08-04T14:20:35.000Z" itemprop="datePublished">2014-08-04</time>
+    Update date:<time datetime="2016-07-04T13:24:57.000Z" itemprop="dateModified">2016-07-04</time>
+    
+  </p>
+</header>
+    <div class="entry">
+		
+        <p>本文是我对run loop的一个备忘 , 将来会持续加入自己对运行循环的理解</p>
+<p>1。runloop是事件接收和分发机制的一个实现。</p>
+<p>2。什么时候使用runloop</p>
+<p>当需要和该线程进行交互的时候。主线程默认有runloop。当自己启动一个线程，如果只是用于处理单一的事件，则该线程在执行完之后就退出了。所以当我们需要让该线程即监听某项事务事，就得让线程一直不退出，runloop就是这么一个循环，没有事件的时候，一直卡着，有事件来临了，执行其对应的函数</p>
+<p>3。 run loop需要处理的event source 有两种：input sources(常是其他线程的异步的event)和 timer sources（定时器）。</p>
+<p>Anatomy of a Run Loop</p>
+<p>run loop，正如其名称所示，是线程进入和被线程用来响应事件以及调用事件处理函数的地方。需要在代码中使用控制语句实现run loop的循环，也就是说，需要代码提供while 或者 for循环来驱动run loop。在这个循环中，使用一个runloop对象[NSRunloop currentRunloop]执行接收消息，调用对应的处理函数。</p>
+<pre><code>runloop接收来自两种源事件，input sources和timer sources。前者传递异步事件，通常是来自其他线程和不同的程序中的消息；后者传递同步事件（重复执行或者在特定时间上触发）。所有这两种sources都有特定的代码来处理。
+</code></pre><p>input sources在调用了响应的处理函数之后会调用runUntilDate:使得runloop退出，而Timer sources不会调用runUntilDate：使得runloop退出。</p>
+<p>除了处理input sources，runloop 也会产生一些关于本身行为的notificaiton。注册成为runloop的observer，可以接收到这些notification，做一些额外的处理。（使用CoreFoundation来成为runloop的observer）。</p>
+<p>下面部分介绍runloop的组成部分以及runloop所处的runmode。同时也描述了不同时期产生的不同事件消息。</p>
+<p>Run Loop Modes</p>
+<p>一个runloop mode就是input sources、timer和observers的集合。每次执行runloop，都需要指定一个mode。在次期间，只有与该mode关联的source才会被监管和传递他们的事件，同样只有相关的observer被通知。其他mode下的sourceshold新的事件，直到得到运行？？？？Sourcesassociated with other modes hold on to any new events until subsequent passesthrough the loop in the appropriate mode.</p>
+<p>在代码中，mode的命名用string表示，有一些default mode和其他常用的modes。 可以使用字符串来标识一个自定义的mode。新建的自定义mode，至少需要一个inputsources或者timers或者 observers。</p>
+<p>mode用来过滤掉你不想监听的sources，使得你想要的事件通过你代码中的循环。大数情况运行在default mode中，对于辅助线程，可以使用自定义mode来防止低优先级的sources传递事件，这样如果当前操作是time-critical，可以省下资源。</p>
+<p>Input Sources</p>
+<p>input sources异步地传递事件给当前线程。input source 分两类，Port-based和custom 。</p>
+<p>4。run loop 启动顺序</p>
+<p>通知观察者，run loop启动<br>通知观察者任何即将要开始的定时器<br>通知观察者任何非基于端口的源即将启动<br>启动任何准备好的非基于端口的源<br>如果基于端口的源准备好并处于等待状态，立即启动；并进入步骤9。<br>通知观察者线程进入休眠<br>将线程之于休眠直到任一下面的事件发生<br>某一事件到达基于端口的源<br>定时器启动<br>设置了run loop的终止时间<br>run loop唤醒<br>通知观察者线程将被唤醒。<br>处理未处理的事件<br>如果用户定义的定时器启动，处理定时事件并重启run loop。进入步骤2<br>如果输入源启动，传递相应的消息<br>run loop唤醒但未终止，重启。进入步骤2<br>通知观察者run loop结束。<br>通知观察者，run loop启动<br>通知观察者任何即将要开始的定时器<br>通知观察者任何非基于端口的源即将启动<br>启动任何准备好的非基于端口的源<br>如果基于端口的源准备好并处于等待状态，立即启动；并进入步骤9。<br>通知观察者线程进入休眠<br>将线程之于休眠直到任一下面的事件发生<br>某一事件到达基于端口的源<br>定时器启动<br>设置了run loop的终止时间<br>run loop唤醒<br>通知观察者线程将被唤醒。<br>处理未处理的事件<br>如果用户定义的定时器启动，处理定时事件并重启run loop。进入步骤2<br>如果输入源启动，传递相应的消息<br>run loop唤醒但未终止，重启。进入步骤2<br>通知观察者run loop结束。</p>
+<p>5 。 何时需要在新线程中使用run loop</p>
+<p>使用端口或自定义输入源和其他线程通信<br>使用定时器<br>cocoa中使用任何performSelector<br>使线程履行周期性任务</p>
+
+    </div>
+    <footer>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/runloop/">runloop</a>
+  </div>
+
+		<div class="bdsharebuttonbox">
+	<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+	<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+	<a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a>
+	<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="bds_more" data-cmd="more"></a>
+	<a href="#" class="bds_count" data-cmd="count"></a>
+</div>
+<script>
+window._bd_share_config=
+{
+	"common":{
+		"bdSnsKey":{},
+		"bdText":"",
+		"bdMini":"2",
+		"bdMiniList":false,
+		"bdPic":"",
+		"bdStyle":"0",
+		"bdSize":"24"
+	},
+	"share":{},
+	"image":{
+		"viewList":["qzone","tsina","tqq","renren","weixin","fbook","twi"],
+		"viewText":"分享到：",
+		"viewSize":"24"
+	},
+	"selectShare":{
+		"bdContainerClass":null,
+		"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin","fbook","twi"]
+	}
+};
+with(document)0[
+	(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)
+];
+</script>    
+        <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+ <nav id="pagination" >
+    
+    <a href="/2014/08/20/runloop副本/" class="alignleft prev" title="贝塞尔曲线（UIBezierPath）属性、方法汇总">贝塞尔曲线（UIBezierPath）属性、方法汇总</a>
+    
+    
+    <a href="/2014/07/15/UItextField2/" class="alignright next" title="UITextField汇总二:交互篇">UITextField汇总二:交互篇</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+
+
+	
+	<section id="comment">
+		<!-- 多说评论框 start -->
+		<div class="ds-thread" data-thread-key="2014/08/04/UIBezierPath/" data-title="runloop备忘" data-url="www.yoursite.com/2014/08/04/UIBezierPath/"></div>
+		<!-- 多说评论框 end -->
+		<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+		<script type="text/javascript">
+		var duoshuoQuery = {short_name:""};
+		(function() {
+			var ds = document.createElement('script');
+			ds.type = 'text/javascript';ds.async = true;
+			ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+			ds.charset = 'UTF-8';
+			(document.getElementsByTagName('head')[0] 
+			 || document.getElementsByTagName('body')[0]).appendChild(ds);
+		})();
+		</script>
+		<!-- 多说公共JS代码 end -->
+	</section>
+	
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tagcloud">
+  <h3 class="title">Tag Cloud</h3>
+  <div class="entry">
+    <a href="/tags/UIBezierPath/" style="font-size: 10px;">UIBezierPath</a> <a href="/tags/UITextField/" style="font-size: 20px;">UITextField</a> <a href="/tags/runloop/" style="font-size: 10px;">runloop</a>
+  </div>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer"><div id="footer" >
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/huangjunhui/concise" target="_blank" title="Concise">Concise</a> © 2013 
+		
+		<a href="www.yoursite.com/about" target="_blank" title="李天昊">李天昊</a>
+		
+		</p>
+</div>
+</footer>
+  <script src="//libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/counter.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+<div id="totop" style="position:fixed;bottom:100px;right:10px;cursor: pointer;">
+<a title="返回顶部"><img src="/imgs/scrollup.png"/></a>
+</div>
+<script src="/js/totop.js"></script>
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+</body>
+</html>
+
+

@@ -1,0 +1,370 @@
+
+
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script type="text/javascript" src="http://tajs.qq.com/stats?sId=44218032" charset="UTF-8"></script>
+  <script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?7192fa361f5cabb11d8a22de41c1ba8f";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+  
+  <title>贝塞尔曲线（UIBezierPath）属性、方法汇总 | 白驹过隙 点滴于心</title>
+  <meta name="author" content="李天昊">
+  
+  <meta name="description" content="李天昊的技术博">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="贝塞尔曲线（UIBezierPath）属性、方法汇总"/>
+  <meta property="og:site_name" content="白驹过隙 点滴于心"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/imgs/favicon.ico" rel="icon" type="image/x-ico">
+  <link rel="alternate" href="/atom.xml" title="白驹过隙 点滴于心" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//libs.baidu.com/jquery/1.8.0/jquery.min.js"></script>
+</head>
+
+
+<body>
+  <header><div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/imgs/logo.png" alt="白驹过隙 点滴于心" title="白驹过隙 点滴于心"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name">白驹过隙 点滴于心</h1>
+				<h2 class="blog-motto">Talk is cheap. Show me the code!</h2>
+			</div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li> <a href="/atom.xml">RSS</a> </li>
+				</ul>
+			</nav>			
+</div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header class="article-info clearfix">
+  <h1 itemprop="name">
+	贝塞尔曲线（UIBezierPath）属性、方法汇总
+  </h1>
+  <p class="article-author">By
+    
+      <a href="www.yoursite.com" title="李天昊">李天昊</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-08-20T14:10:36.000Z" itemprop="datePublished">2014-08-20</time>
+    Update date:<time datetime="2016-07-04T13:30:01.000Z" itemprop="dateModified">2016-07-04</time>
+    
+  </p>
+</header>
+    <div class="entry">
+		
+        <p>贝塞尔曲线（UIBezierPath）属性、方法汇总<br>UIBezierPath主要用来绘制矢量图形，它是基于Core Graphics对CGPathRef数据类型和path绘图属性的一个封装，所以是需要图形上下文的（CGContextRef），所以一般UIBezierPath在drawRect中使用。</p>
+<p>UIBezierPath的属性介绍：</p>
+<p>1.CGPath：将UIBezierPath类转换成CGPath，类似于UIColor的CGColor</p>
+<p>2.empty：只读类型，路径上是否有有效的元素</p>
+<p>3.bounds：和view的bounds是不一样的，它获取path的X坐标、Y坐标、宽度，但是高度为0</p>
+<p>4.currentPoint：当前path的位置，可以理解为path的终点</p>
+<p>5.lineWidth：path宽度</p>
+<p>6.lineCapStyle：path端点样式，有3种样式</p>
+<pre><code>　　kCGLineCapButt：无端点
+
+　　kCGLineCapRound：圆形端点
+
+　　kCGLineCapSquare：方形端点（样式上和kCGLineCapButt是一样的，但是比kCGLineCapButt长一点）
+</code></pre><p>　　　 效果图：</p>
+<p>　　　　</p>
+<p>7.lineJoinStyle：拐角样式</p>
+<p>　　　   kCGLineJoinMiter：尖角</p>
+<pre><code>　　kCGLineJoinRound：圆角
+
+　　kCGLineJoinBevel：缺角
+</code></pre><p>8.miterLimit：最大斜接长度（只有在使用kCGLineJoinMiter是才有效）， 边角的角度越小，斜接长度就会越大<br>为了避免斜接长度过长，使用lineLimit属性限制，如果斜接长度超过miterLimit，边角就会以KCALineJoinBevel类型来显示</p>
+<p>9.flatness：弯曲路径的渲染精度，默认为0.6，越小精度越高，相应的更加消耗性能。</p>
+<p>10.usesEvenOddFillRule：单双数圈规则是否用于绘制路径，默认是NO。</p>
+<ol>
+<li>UIRectCorner:角</li>
+</ol>
+<p>　　UIRectCornerTopLeft：左上角</p>
+<p>　　UIRectCornerTopRight：右上角</p>
+<p>　　UIRectCornerBottomLeft：左下角</p>
+<p>　　UIRectCornerBottomRight：右下角</p>
+<p>　　UIRectCornerAllCorners：所有四个角</p>
+<p>UIBezierPath的方法介绍：</p>
+<p>1.创建UIBezierPath对象:</p>
+<p>　　+ (instancetype)bezierPath：</p>
+<p>2.创建在rect内的矩形:</p>
+<p>　　+ (instancetype)bezierPathWithRect:(CGRect)rect：</p>
+<p>　　参数：rect-&gt;矩形的Frame</p>
+<p>3.创建在rect里的内切曲线:</p>
+<p>　　+ (instancetype)bezierPathWithOvalInRect:(CGRect)rect:</p>
+<p>　　参数：rect-&gt;矩形的Frame</p>
+<p>4.创建带有圆角的矩形，当矩形变成正圆的时候，Radius就不再起作用:</p>
+<p>　　+ (instancetype)bezierPathWithRoundedRect:(CGRect)rect cornerRadius:(CGFloat)cornerRadius</p>
+<p>　　参数：rect-&gt;矩形的Frame</p>
+<p>　　　　   cornerRadius-&gt;圆角大小　　　   </p>
+<p>5.设定特定的角为圆角的矩形：</p>
+<p>　　+ (instancetype)bezierPathWithRoundedRect:(CGRect)rect byRoundingCorners:(UIRectCorner)corners cornerRadii:(CGSize)cornerRadii</p>
+<p>　　参数：rect-&gt;矩形的Frame</p>
+<p>　　　　　corners-&gt;指定的圆角</p>
+<p>　　　　　cornerRadii-&gt;圆角的大小</p>
+<p>6.创建圆弧+ (instancetype)bezierPathWithArcCenter:(CGPoint)center radius:(CGFloat)radius startAngle:(CGFloat)startAngle endAngle:(CGFloat)endAngle clockwise:(BOOL)clockwise</p>
+<p>　　参数：center-&gt;圆点</p>
+<p>　　　　　radius-&gt;半径</p>
+<p>　　　　　startAngle-&gt;起始位置</p>
+<p>　　　　　endAngle-&gt;结束为止</p>
+<p>　　　　　clockwise-&gt;是否顺时针方向</p>
+<p>7.通过已有路径创建路径:</p>
+<p>　　B+ (instancetype)bezierPathWithCGPath:(CGPathRef)CGPath</p>
+<p>　　参数：CGPath-&gt;已有路径</p>
+<p>8.init方法：</p>
+<p>　　- (instancetype)init</p>
+<p>9.initWiteCoder方法：</p>
+<p>　　- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder</p>
+<p>10.转换成CGPath：</p>
+<p>　　- (CGPathRef)CGPath</p>
+<p>11.移动到某一点：</p>
+<p>　　- (void)moveToPoint:(CGPoint)point</p>
+<p>　　参数：point-&gt;目标位置</p>
+<p>12.绘制一条线：</p>
+<p>　　- (void)addLineToPoint:(CGPoint)point</p>
+<p>　　参数：point-&gt;目标位置</p>
+<p>13.创建三次贝塞尔曲线：</p>
+<p>　　- (void)addCurveToPoint:(CGPoint)endPoint controlPoint1:(CGPoint)controlPoint1 controlPoint2:(CGPoint)controlPoint2</p>
+<p>　　参数：endPoint-&gt;终点</p>
+<p>　　　　　controlPoint1-&gt;控制点1</p>
+<p>　　　　　controlPoint2-&gt;控制点2</p>
+<p>14.创建二次贝塞尔曲线：</p>
+<p>　　- (void)addQuadCurveToPoint:(CGPoint)endPoint controlPoint:(CGPoint)controlPoint</p>
+<p>　　参数：endPoint-&gt;终点</p>
+<p>　　　　   controlPoint-&gt;控制点</p>
+<p>15.添加圆弧：</p>
+<p>　　- (void)addArcWithCenter:(CGPoint)center radius:(CGFloat)radius startAngle:(CGFloat)startAngle endAngle:(CGFloat)endAngle clockwise:(BOOL)clockwise</p>
+<p>　　参数：参看创建圆弧</p>
+<p>16.闭合路径，即在终点和起点连一根线：</p>
+<p>　　- (void)closePath;</p>
+<p>17.清空路径：</p>
+<p>　　- (void)removeAllPoints;</p>
+<p>18.追加路径：</p>
+<p>　　- (void)appendPath:(UIBezierPath *)bezierPath</p>
+<p>　　参数：bezierPath-&gt;追加的路径</p>
+<p>19.扭转路径，即起点变成终点，终点变成起点：</p>
+<p>　　- (UIBezierPath *)bezierPathByReversingPath</p>
+<p>20.路径进行仿射变换：</p>
+<p>　　- (void)applyTransform:(CGAffineTransform)transform;</p>
+<p> 　　参数：transform-&gt;仿射变换</p>
+<p>21.绘制虚线：</p>
+<p>　　- (void)setLineDash:(nullable const CGFloat *)pattern count:(NSInteger)count phase:(CGFloat)phase</p>
+<p>　　参数：pattern-&gt;C类型线性数据</p>
+<p>　　　　   count-&gt;pattern中数据个数</p>
+<p>　　　　　phase-&gt;　起始位置</p>
+<p>22.填充：</p>
+<p>　　- (void)fill</p>
+<p>23.描边，路径创建需要描边才能显示出来：</p>
+<p>　　- (void)stroke;</p>
+<p>24.设置描边颜色，需要在设置后调用描边方法：</p>
+<p>　　[［UIColor blackColor］ setStroke];</p>
+<p>25.设置填充颜色，需要在设置后调用填充方法</p>
+<p>　　[［UIColor redColor］ setFill];</p>
+<p>26.设置描边的混合模式：</p>
+<p>　　- (void)fillWithBlendMode:(CGBlendMode)blendMode alpha:(CGFloat)alpha</p>
+<p>　　参数：blendMode-&gt;混合模式</p>
+<p>　　　　   alpha-&gt;透明度</p>
+<p>27.设置填充的混合模式：</p>
+<p>　　- (void)strokeWithBlendMode:(CGBlendMode)blendMode alpha:(CGFloat)alpha;</p>
+<p>　　参数：blendMode-&gt;混合模式</p>
+<p>　　　　   alpha-&gt;透明度</p>
+<p>28.修改当前图形上下文的绘图区域可见,随后的绘图操作导致呈现内容只有发生在指定路径的填充区域</p>
+<p>　　- (void)addClip;</p>
+
+    </div>
+    <footer>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/UIBezierPath/">UIBezierPath</a>
+  </div>
+
+		<div class="bdsharebuttonbox">
+	<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+	<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+	<a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a>
+	<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="bds_more" data-cmd="more"></a>
+	<a href="#" class="bds_count" data-cmd="count"></a>
+</div>
+<script>
+window._bd_share_config=
+{
+	"common":{
+		"bdSnsKey":{},
+		"bdText":"",
+		"bdMini":"2",
+		"bdMiniList":false,
+		"bdPic":"",
+		"bdStyle":"0",
+		"bdSize":"24"
+	},
+	"share":{},
+	"image":{
+		"viewList":["qzone","tsina","tqq","renren","weixin","fbook","twi"],
+		"viewText":"分享到：",
+		"viewSize":"24"
+	},
+	"selectShare":{
+		"bdContainerClass":null,
+		"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin","fbook","twi"]
+	}
+};
+with(document)0[
+	(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)
+];
+</script>    
+        <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+ <nav id="pagination" >
+    
+    
+    <a href="/2014/08/04/UIBezierPath/" class="alignright next" title="runloop备忘">runloop备忘</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+
+
+	
+	<section id="comment">
+		<!-- 多说评论框 start -->
+		<div class="ds-thread" data-thread-key="2014/08/20/runloop副本/" data-title="贝塞尔曲线（UIBezierPath）属性、方法汇总" data-url="www.yoursite.com/2014/08/20/runloop副本/"></div>
+		<!-- 多说评论框 end -->
+		<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+		<script type="text/javascript">
+		var duoshuoQuery = {short_name:""};
+		(function() {
+			var ds = document.createElement('script');
+			ds.type = 'text/javascript';ds.async = true;
+			ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+			ds.charset = 'UTF-8';
+			(document.getElementsByTagName('head')[0] 
+			 || document.getElementsByTagName('body')[0]).appendChild(ds);
+		})();
+		</script>
+		<!-- 多说公共JS代码 end -->
+	</section>
+	
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tagcloud">
+  <h3 class="title">Tag Cloud</h3>
+  <div class="entry">
+    <a href="/tags/UIBezierPath/" style="font-size: 10px;">UIBezierPath</a> <a href="/tags/UITextField/" style="font-size: 20px;">UITextField</a> <a href="/tags/runloop/" style="font-size: 10px;">runloop</a>
+  </div>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer"><div id="footer" >
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/huangjunhui/concise" target="_blank" title="Concise">Concise</a> © 2013 
+		
+		<a href="www.yoursite.com/about" target="_blank" title="李天昊">李天昊</a>
+		
+		</p>
+</div>
+</footer>
+  <script src="//libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/counter.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+<div id="totop" style="position:fixed;bottom:100px;right:10px;cursor: pointer;">
+<a title="返回顶部"><img src="/imgs/scrollup.png"/></a>
+</div>
+<script src="/js/totop.js"></script>
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+</body>
+</html>
+
+
