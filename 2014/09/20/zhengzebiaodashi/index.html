@@ -15,7 +15,7 @@
 	})();
 	</script>
   
-  <title>runloop备忘 | 白驹过隙 点滴于心</title>
+  <title>正则表达式 | 白驹过隙 点滴于心</title>
   <meta name="author" content="李天昊">
   
   <meta name="description" content="李天昊的技术博">
@@ -23,7 +23,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="runloop备忘"/>
+  <meta property="og:title" content="正则表达式"/>
   <meta property="og:site_name" content="白驹过隙 点滴于心"/>
 
   
@@ -79,41 +79,36 @@
   <div class="post-content">
     <header class="article-info clearfix">
   <h1 itemprop="name">
-	runloop备忘
+	正则表达式
   </h1>
   <p class="article-author">By
     
       <a href="www.yoursite.com" title="李天昊">李天昊</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-08-04T14:20:35.000Z" itemprop="datePublished">2014-08-04</time>
-    Update date:<time datetime="2016-07-04T13:24:57.000Z" itemprop="dateModified">2016-07-04</time>
+    <time datetime="2014-09-20T14:30:45.000Z" itemprop="datePublished">2014-09-20</time>
+    Update date:<time datetime="2016-07-04T14:01:12.000Z" itemprop="dateModified">2016-07-04</time>
     
   </p>
 </header>
     <div class="entry">
 		
-        <p>本文是我对run loop的一个备忘 , 将来会持续加入自己对运行循环的理解</p>
-<p>1。runloop是事件接收和分发机制的一个实现。</p>
-<p>2。什么时候使用runloop</p>
-<p>当需要和该线程进行交互的时候。主线程默认有runloop。当自己启动一个线程，如果只是用于处理单一的事件，则该线程在执行完之后就退出了。所以当我们需要让该线程即监听某项事务事，就得让线程一直不退出，runloop就是这么一个循环，没有事件的时候，一直卡着，有事件来临了，执行其对应的函数</p>
-<p>3。 run loop需要处理的event source 有两种：input sources(常是其他线程的异步的event)和 timer sources（定时器）。</p>
-<p>Anatomy of a Run Loop</p>
-<p>run loop，正如其名称所示，是线程进入和被线程用来响应事件以及调用事件处理函数的地方。需要在代码中使用控制语句实现run loop的循环，也就是说，需要代码提供while 或者 for循环来驱动run loop。在这个循环中，使用一个runloop对象[NSRunloop currentRunloop]执行接收消息，调用对应的处理函数。</p>
-<pre><code>runloop接收来自两种源事件，input sources和timer sources。前者传递异步事件，通常是来自其他线程和不同的程序中的消息；后者传递同步事件（重复执行或者在特定时间上触发）。所有这两种sources都有特定的代码来处理。
-</code></pre><p>input sources在调用了响应的处理函数之后会调用runUntilDate:使得runloop退出，而Timer sources不会调用runUntilDate：使得runloop退出。</p>
-<p>除了处理input sources，runloop 也会产生一些关于本身行为的notificaiton。注册成为runloop的observer，可以接收到这些notification，做一些额外的处理。（使用CoreFoundation来成为runloop的observer）。</p>
-<p>下面部分介绍runloop的组成部分以及runloop所处的runmode。同时也描述了不同时期产生的不同事件消息。</p>
-<p>Run Loop Modes</p>
-<p>一个runloop mode就是input sources、timer和observers的集合。每次执行runloop，都需要指定一个mode。在次期间，只有与该mode关联的source才会被监管和传递他们的事件，同样只有相关的observer被通知。其他mode下的sourceshold新的事件，直到得到运行？？？？Sourcesassociated with other modes hold on to any new events until subsequent passesthrough the loop in the appropriate mode.</p>
-<p>在代码中，mode的命名用string表示，有一些default mode和其他常用的modes。 可以使用字符串来标识一个自定义的mode。新建的自定义mode，至少需要一个inputsources或者timers或者 observers。</p>
-<p>mode用来过滤掉你不想监听的sources，使得你想要的事件通过你代码中的循环。大数情况运行在default mode中，对于辅助线程，可以使用自定义mode来防止低优先级的sources传递事件，这样如果当前操作是time-critical，可以省下资源。</p>
-<p>Input Sources</p>
-<p>input sources异步地传递事件给当前线程。input source 分两类，Port-based和custom 。</p>
-<p>4。run loop 启动顺序</p>
-<p>通知观察者，run loop启动<br>通知观察者任何即将要开始的定时器<br>通知观察者任何非基于端口的源即将启动<br>启动任何准备好的非基于端口的源<br>如果基于端口的源准备好并处于等待状态，立即启动；并进入步骤9。<br>通知观察者线程进入休眠<br>将线程之于休眠直到任一下面的事件发生<br>某一事件到达基于端口的源<br>定时器启动<br>设置了run loop的终止时间<br>run loop唤醒<br>通知观察者线程将被唤醒。<br>处理未处理的事件<br>如果用户定义的定时器启动，处理定时事件并重启run loop。进入步骤2<br>如果输入源启动，传递相应的消息<br>run loop唤醒但未终止，重启。进入步骤2<br>通知观察者run loop结束。<br>通知观察者，run loop启动<br>通知观察者任何即将要开始的定时器<br>通知观察者任何非基于端口的源即将启动<br>启动任何准备好的非基于端口的源<br>如果基于端口的源准备好并处于等待状态，立即启动；并进入步骤9。<br>通知观察者线程进入休眠<br>将线程之于休眠直到任一下面的事件发生<br>某一事件到达基于端口的源<br>定时器启动<br>设置了run loop的终止时间<br>run loop唤醒<br>通知观察者线程将被唤醒。<br>处理未处理的事件<br>如果用户定义的定时器启动，处理定时事件并重启run loop。进入步骤2<br>如果输入源启动，传递相应的消息<br>run loop唤醒但未终止，重启。进入步骤2<br>通知观察者run loop结束。</p>
-<p>5 。 何时需要在新线程中使用run loop</p>
-<p>使用端口或自定义输入源和其他线程通信<br>使用定时器<br>cocoa中使用任何performSelector<br>使线程履行周期性任务</p>
+        <p>正则表达式</p>
+<p>匹配中文字符的正则表达式： [\u4e00-\u9fa5]<br>评注：匹配中文还真是个头疼的事，有了这个表达式就好办了</p>
+<p>匹配双字节字符(包括汉字在内)：[^\x00-\xff]<br>评注：可以用来计算字符串的长度（一个双字节字符长度计2，ASCII字符计1）</p>
+<p>匹配空白行的正则表达式：\n\s*\r<br>评注：可以用来删除空白行</p>
+<p>匹配HTML标记的正则表达式：&lt;(\S<em>?)[^&gt;]</em>&gt;.<em>?&lt;/\1&gt;|&lt;.</em>? /&gt;<br>评注：网上流传的版本太糟糕，上面这个也仅仅能匹配部分，对于复杂的嵌套标记依旧没有能力为力</p>
+<p>匹配首尾空白字符的正则表达式：^\s<em>|\s</em>$<br>评注：可以用来删除行首行尾的空白字符(包括空格、制表符、换页符等等)，非常有用的表达式</p>
+<p>匹配Email地址的正则表达式：\w+([-+.]\w+)<em>@\w+([-.]\w+)</em>.\w+([-.]\w+)*<br>评注：表单验证时很实用</p>
+<p>匹配网址URL的正则表达式：[a-zA-z]+://[^\s]*<br>评注：网上流传的版本功能很有限，上面这个基本可以满足需求</p>
+<p>匹配帐号是否合法(字母开头，允许5-16字节，允许字母数字下划线)：^[a-zA-Z][a-zA-Z0-9_]{4,15}$<br>评注：表单验证时很实用</p>
+<p>匹配国内电话号码：\d{3}-\d{8}|\d{4}-\d{7}<br>评注：匹配形式如 0511-4405222 或 021-87888822</p>
+<p>匹配腾讯QQ号：[1-9][0-9]{4,}<br>评注：腾讯QQ号从10000开始</p>
+<p>匹配中国邮政编码：[1-9]\d{5}(?!\d)<br>评注：中国邮政编码为6位数字</p>
+<p>匹配身份证：\d{15}|\d{18}<br>评注：中国的身份证为15位或18位</p>
+<p>匹配ip地址：\d+.\d+.\d+.\d+<br>评注：提取ip地址时有用</p>
+<p>匹配特定数字：<br>^[1-9]\d<em>$　 　 //匹配正整数<br>^-[1-9]\d</em>$ 　 //匹配负整数<br>^-?[1-9]\d<em>$　　 //匹配整数<br>^[1-9]\d</em>|0$　 //匹配非负整数（正整数 + 0）<br>^-[1-9]\d<em>|0$　　 //匹配非正整数（负整数 + 0）<br>^[1-9]\d</em>.\d<em>|0.\d</em>[1-9]\d<em>$　　 //匹配正浮点数<br>^-([1-9]\d</em>.\d<em>|0.\d</em>[1-9]\d<em>)$　 //匹配负浮点数<br>^-?([1-9]\d</em>.\d<em>|0.\d</em>[1-9]\d<em>|0?.0+|0)$　 //匹配浮点数<br>^[1-9]\d</em>.\d<em>|0.\d</em>[1-9]\d<em>|0?.0+|0$　　 //匹配非负浮点数（正浮点数 + 0）<br>^(-([1-9]\d</em>.\d<em>|0.\d</em>[1-9]\d*))|0?.0+|0$　　//匹配非正浮点数（负浮点数 + 0）<br>评注：处理大量数据时有用，具体应用时注意修正</p>
+<p>匹配特定字符串：<br>^[A-Za-z]+$　　//匹配由26个英文字母组成的字符串<br>^[A-Z]+$　　//匹配由26个英文字母的大写组成的字符串<br>^[a-z]+$　　//匹配由26个英文字母的小写组成的字符串<br>^[A-Za-z0-9]+$　　//匹配由数字和26个英文字母组成的字符串<br>^\w+$　　//匹配由数字、26个英文字母或者下划线组成的字符串 </p>
 
     </div>
     <footer>
@@ -121,7 +116,7 @@
         
   
   <div class="tags">
-    <a href="/tags/runloop/">runloop</a>
+    <a href="/tags/正则表达式/">正则表达式</a>
   </div>
 
 		<div class="bdsharebuttonbox">
@@ -169,10 +164,8 @@ with(document)0[
 
  <nav id="pagination" >
     
-    <a href="/2014/08/20/文件操作/" class="alignleft prev" title="iOS文件操作">iOS文件操作</a>
     
-    
-    <a href="/2014/07/15/UItextField2/" class="alignright next" title="UITextField汇总二:交互篇">UITextField汇总二:交互篇</a>
+    <a href="/2014/08/20/runloop/" class="alignright next" title="贝塞尔曲线（UIBezierPath）属性、方法汇总">贝塞尔曲线（UIBezierPath）属性、方法汇总</a>
     
     <div class="clearfix"></div>
 </nav>
@@ -182,7 +175,7 @@ with(document)0[
 	
 	<section id="comment">
 		<!-- 多说评论框 start -->
-		<div class="ds-thread" data-thread-key="2014/08/04/UIBezierPath/" data-title="runloop备忘" data-url="www.yoursite.com/2014/08/04/UIBezierPath/"></div>
+		<div class="ds-thread" data-thread-key="2014/09/20/zhengzebiaodashi/" data-title="正则表达式" data-url="www.yoursite.com/2014/09/20/zhengzebiaodashi/"></div>
 		<!-- 多说评论框 end -->
 		<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 		<script type="text/javascript">
