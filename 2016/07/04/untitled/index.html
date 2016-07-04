@@ -1,0 +1,396 @@
+
+
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script type="text/javascript" src="http://tajs.qq.com/stats?sId=44218032" charset="UTF-8"></script>
+  <script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?7192fa361f5cabb11d8a22de41c1ba8f";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+  
+  <title>白驹过隙 点滴于心</title>
+  <meta name="author" content="李天昊">
+  
+  <meta name="description" content="李天昊的技术博">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="白驹过隙 点滴于心"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/imgs/favicon.ico" rel="icon" type="image/x-ico">
+  <link rel="alternate" href="/atom.xml" title="白驹过隙 点滴于心" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//libs.baidu.com/jquery/1.8.0/jquery.min.js"></script>
+</head>
+
+
+<body>
+  <header><div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/imgs/logo.png" alt="白驹过隙 点滴于心" title="白驹过隙 点滴于心"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name">白驹过隙 点滴于心</h1>
+				<h2 class="blog-motto">Talk is cheap. Show me the code!</h2>
+			</div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li> <a href="/atom.xml">RSS</a> </li>
+				</ul>
+			</nav>			
+</div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header class="article-info clearfix">
+  <h1 itemprop="name">
+	
+  </h1>
+  <p class="article-author">By
+    
+      <a href="www.yoursite.com" title="李天昊">李天昊</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2016-07-04T11:37:55.000Z" itemprop="datePublished">2016-07-04</time>
+    更新日期:<time datetime="2016-07-04T11:37:56.000Z" itemprop="dateModified">2016-07-04</time>
+    
+  </p>
+</header>
+    <div class="entry">
+		
+        <!DOCTYPE html><html><head><title>UITextField汇总一:呈现篇</title><meta charset="utf-8"><link href="https://d31qtcb7c58z3n.cloudfront.net/res-min/themes/marxico.css" rel="stylesheet"><style></style></head><body><div id="preview-contents" class="note-content">
+                        <div id="wmd-preview" class="preview-content"></div>
+                    <div id="wmd-preview-section-64940" class="wmd-preview-section preview-content">
+
+</div><div id="wmd-preview-section-65778" class="wmd-preview-section preview-content">
+
+<h1 id="uitextfield汇总一呈现篇">UITextField汇总一:呈现篇</h1>
+
+<p> <br>
+<strong>UITextField</strong>是iOS开发中用到的最常用系统控件之一,我们可以用它来接收用户输入的信息,我们使用它来完成用户交互时,多半要涉及到系统键盘的调用和收回,因此可以说UITextField是比较复杂的控件,本系列文章将从以下三个方向对UITextField控件做一个较完整的总结.本文为第一篇:呈现.</p>
+
+<ul><li><strong>呈现</strong> <br>
+<ul>
+<li>自身显示属性</li>
+<li>keyBoard相关属性</li>
+<li>UIPasteboard相关属性</li>
+<li>自定义UITextField方法</li></ul></li>
+<li><strong>交互</strong> <br>
+<ul>
+<li>响应touch事件</li>
+<li>接受用户信息</li></ul></li>
+<li><strong>代码回调</strong> <br>
+<ul>
+<li>Delegate</li>
+<li>Notification</li>
+<li>Target-Action </li></ul></li>
+</ul>
+
+<hr></div><div id="wmd-preview-section-64942" class="wmd-preview-section preview-content">
+
+<h3 id="呈现">呈现</h3>
+
+</div><div id="wmd-preview-section-64943" class="wmd-preview-section preview-content">
+
+<h5 id="自身显示属性">·自身显示属性</h5>
+
+</div><div id="wmd-preview-section-64944" class="wmd-preview-section preview-content">
+
+<pre class="prettyprint hljs-dark"><code class="language-objectivec hljs"><span class="hljs-comment">//初始化方法 , 可以直接指定frame  也可以先init  再在适当时机给frame属性赋值</span><br><span class="hljs-built_in">UITextField</span> *myTextF = [[<span class="hljs-built_in">UITextField</span> alloc] initWithFrame:frame];<br><br><span class="hljs-comment">//文本框中的内容 , 随着用户输入改变而变 , 可以用代码设置默认值 ,实际上得到的用户输入数据就是由这个而来</span><br><span class="hljs-keyword">@property</span>(nullable, <span class="hljs-keyword">nonatomic</span>,<span class="hljs-keyword">copy</span>)   <span class="hljs-built_in">NSString</span> *text; <br><br><span class="hljs-comment">//属性文本 可以设置指定range内的文本样式(颜色 下划线 中划线等等)</span><br><span class="hljs-keyword">@property</span>(nullable, <span class="hljs-keyword">nonatomic</span>,<span class="hljs-keyword">copy</span>)   <span class="hljs-built_in">NSAttributedString</span>     *attributedText <span class="hljs-built_in">NS_AVAILABLE_IOS</span>(<span class="hljs-number">6</span>_0); <br><span class="hljs-comment">//文本颜色 默认是nil  系统监测到该属性是nil 就会给一个不透明的黑色</span><br><span class="hljs-keyword">@property</span>(nullable, <span class="hljs-keyword">nonatomic</span>,<span class="hljs-keyword">strong</span>) <span class="hljs-built_in">UIColor</span>                *textColor;  <br><span class="hljs-comment">//字体 默认 system font 12 pt</span><br><span class="hljs-keyword">@property</span>(nullable, <span class="hljs-keyword">nonatomic</span>,<span class="hljs-keyword">strong</span>) <span class="hljs-built_in">UIFont</span>                 *font;          <br><span class="hljs-comment">//文本对齐方式 默认左对齐 iOS6.0 之后弃用UITextAlignment枚举 统一用NSTextAlignment枚举 常用的有center left right三个选项</span><br><span class="hljs-keyword">@property</span>(<span class="hljs-keyword">nonatomic</span>) <span class="hljs-built_in">NSTextAlignment</span> textAlignment;<br><br><span class="hljs-comment">// 边框样式 默认为none   </span><br><span class="hljs-comment">//    UITextBorderStyleNone,       无样式</span><br><span class="hljs-comment">//    UITextBorderStyleLine,      线型(此处截图)</span><br><span class="hljs-comment">//    UITextBorderStyleBezel,     刃角(此处截图)</span><br><span class="hljs-comment">//    UITextBorderStyleRoundedRect  圆角(此处截图)</span><br><span class="hljs-comment">//  注意: UITextBorderStyleRoundedRect 就是切圆角  会屏蔽掉background images属性</span><br><span class="hljs-comment">//   我一般是 直接设置uitextfield的layer.bordercolor 和 borderwidth  这样不会屏蔽background设置的image属性 (效果截图)</span><br><span class="hljs-keyword">@property</span>(<span class="hljs-keyword">nonatomic</span>)<span class="hljs-built_in">UITextBorderStyle</span> borderStyle; <br><br><span class="hljs-comment">// 占位文本 默认为亮灰色水印样式</span><br><span class="hljs-keyword">@property</span>(nullable, <span class="hljs-keyword">nonatomic</span>,<span class="hljs-keyword">copy</span>)   <span class="hljs-built_in">NSString</span>               *placeholder; <br><br><span class="hljs-comment">// 整个属性字符串的属性字典 iOS7.0以后的接口 这条和下面的attributedPlaceholder都很少用到</span><br><span class="hljs-keyword">@property</span>(<span class="hljs-keyword">nonatomic</span>,<span class="hljs-keyword">copy</span>)   <span class="hljs-built_in">NSDictionary</span>&lt;<span class="hljs-built_in">NSString</span> *, <span class="hljs-keyword">id</span>&gt;           *defaultTextAttributes <span class="hljs-built_in">NS_AVAILABLE_IOS</span>(<span class="hljs-number">7</span>_0);    <br><span class="hljs-comment">//  占位的属性文本</span><br><span class="hljs-keyword">@property</span>(nullable, <span class="hljs-keyword">nonatomic</span>,<span class="hljs-keyword">copy</span>)   <span class="hljs-built_in">NSAttributedString</span>     *attributedPlaceholder <span class="hljs-built_in">NS_AVAILABLE_IOS</span>(<span class="hljs-number">6</span>_0); <br><br><span class="hljs-comment">//  是否在开始编辑时 清除文本中上次遗留的text  默认是NO</span><br><span class="hljs-keyword">@property</span>(<span class="hljs-keyword">nonatomic</span>)<span class="hljs-built_in">BOOL</span> clearsOnBeginEditing; <br><br><span class="hljs-comment">//自动调整字体适应控件宽度 默认是No </span><br><span class="hljs-comment">// 如果是NO 文本在较长时会滚动</span><br><span class="hljs-comment">// 如果是YES 文本在超过控件宽度时 会缩小到下面属性设置的minimumFontSize大小 缩小的规则是基线位置不变 整体变低</span><br><span class="hljs-keyword">@property</span>(<span class="hljs-keyword">nonatomic</span>)<span class="hljs-built_in">BOOL</span> adjustsFontSizeToFitWidth;<br><span class="hljs-comment">//设置最小字体 为上边属性准备的属性</span><br><span class="hljs-keyword">@property</span>(<span class="hljs-keyword">nonatomic</span>)<span class="hljs-built_in">CGFloat</span> minimumFontSize;      <br><span class="hljs-comment">// 代理 这个你懂得.... 后面会有着重说代理回调的地方</span><br><span class="hljs-keyword">@property</span>(nullable, <span class="hljs-keyword">nonatomic</span>,<span class="hljs-keyword">weak</span>)<span class="hljs-keyword">id</span>&lt;<span class="hljs-built_in">UITextFieldDelegate</span>&gt; delegate; <br><span class="hljs-comment">//背景图片 默认是nil  设置的图片会被画在borderview上 图片像素尺寸不对会被拉伸或挤压 要设置中间拉伸填充区域 使拉伸不变形</span><br><span class="hljs-keyword">@property</span>(nullable, <span class="hljs-keyword">nonatomic</span>,<span class="hljs-keyword">strong</span>) <span class="hljs-built_in">UIImage</span> *background;           <br><span class="hljs-comment">// 禁用状态下的背景图片 注意点同上一个属性</span><br><span class="hljs-keyword">@property</span>(nullable, <span class="hljs-keyword">nonatomic</span>,<span class="hljs-keyword">strong</span>) <span class="hljs-built_in">UIImage</span> *disabledBackground;   <br><span class="hljs-comment">// 指示当前控件是否正在编辑</span><br><span class="hljs-keyword">@property</span>(<span class="hljs-keyword">nonatomic</span>,<span class="hljs-keyword">readonly</span>,getter=isEditing) <span class="hljs-built_in">BOOL</span> editing;<br><br><span class="hljs-comment">// 文本框里面几个子视图的显示模式 : </span><br><span class="hljs-comment">//   UITextFieldViewModeNever,         从不</span><br><span class="hljs-comment">//   UITextFieldViewModeWhileEditing,  编辑时显示</span><br><span class="hljs-comment">//   UITextFieldViewModeUnlessEditing, 编辑以外时间显示</span><br><span class="hljs-comment">//   UITextFieldViewModeAlways         一直显示</span><br><br><span class="hljs-comment">//   右侧清除按钮的显示模式</span><br><span class="hljs-keyword">@property</span>(<span class="hljs-keyword">nonatomic</span>)<span class="hljs-built_in">UITextFieldViewMode</span> clearButtonMode; <br><br><span class="hljs-comment">//左边视图 一般要一个占位的8个点宽度的视图 切圆角后 左边光标被挡出  (一般如果只要占位效果 只设置这个视图的宽度就够了)</span><br><span class="hljs-keyword">@property</span>(nullable, <span class="hljs-keyword">nonatomic</span>,<span class="hljs-keyword">strong</span>) <span class="hljs-built_in">UIView</span>              *leftView;        <span class="hljs-comment">// e.g. magnifying glass</span><br><span class="hljs-keyword">@property</span>(<span class="hljs-keyword">nonatomic</span>)        <span class="hljs-built_in">UITextFieldViewMode</span>  leftViewMode;    <span class="hljs-comment">// sets when the left view shows up. default is UITextFieldViewModeNever</span><br><span class="hljs-comment">//右边视图</span><br><span class="hljs-keyword">@property</span>(nullable, <span class="hljs-keyword">nonatomic</span>,<span class="hljs-keyword">strong</span>) <span class="hljs-built_in">UIView</span>  *rightView;<br><span class="hljs-keyword">@property</span>(<span class="hljs-keyword">nonatomic</span>) <span class="hljs-built_in">UITextFieldViewMode</span>  rightViewMode; <br></code></pre>
+
+</div><div id="wmd-preview-section-64945" class="wmd-preview-section preview-content">
+
+<h5 id="keyboard相关属性">·keyBoard相关属性</h5>
+
+</div><div id="wmd-preview-section-64946" class="wmd-preview-section preview-content">
+
+<h5 id="系统键盘高度为216pt-辅助视图40pt-系统默认的辅助视图是给我们选的联想词语的-一般键盘弹出后为了躲避键盘-被键盘挡住的区域要做适当的移动动画-这个后面的回调篇说具体方法">系统键盘高度为216pt , 辅助视图40pt (系统默认的辅助视图是给我们选的联想词语的) 一般键盘弹出后为了躲避键盘 , 被键盘挡住的区域要做适当的移动动画, 这个后面的回调篇说具体方法</h5>
+
+</div><div id="wmd-preview-section-64947" class="wmd-preview-section preview-content">
+
+<h6 id="以下两个属性可以自定义键盘区域的视图以及键盘上方的辅助视图就是上一个-下一个-完成-等等">以下两个属性可以自定义键盘区域的视图以及键盘上方的辅助视图(就是上一个 , 下一个 , 完成 等等) ,</h6>
+
+</div><div id="wmd-preview-section-64948" class="wmd-preview-section preview-content">
+
+<pre class="prettyprint hljs-dark"><code class="language-objectivec hljs"><span class="hljs-comment">//  自定义的输入视图 </span><br><span class="hljs-comment">//  一般是pickerview 或者datepicker , 又或者是用UICollectionView写的自定义emoji键盘</span><br><span class="hljs-keyword">@property</span> (nullable, <span class="hljs-keyword">readwrite</span>, <span class="hljs-keyword">strong</span>) <span class="hljs-built_in">UIView</span> *inputView;    <br><span class="hljs-comment">//  自定义的辅助视图 就是键盘上方的那一条          </span><br><span class="hljs-keyword">@property</span> (nullable, <span class="hljs-keyword">readwrite</span>, <span class="hljs-keyword">strong</span>) <span class="hljs-built_in">UIView</span> *inputAccessoryView;<br><span class="hljs-comment">//  自己试了几次 没啥效果 字面意思是插入的时候清除之前的文本 但是我试的时候并没有起作用 , 看注释的意思貌似是要在与用户交互的时候动态改变这个值 , 这个是也会根据用户的交互选中情况不同而自己改变 </span><br><span class="hljs-comment">//总之实际开发中没有涉及到 试了几次无果 就没再研究</span><br><span class="hljs-keyword">@property</span>(<span class="hljs-keyword">nonatomic</span>) <span class="hljs-built_in">BOOL</span> clearsOnInsertion <span class="hljs-built_in">NS_AVAILABLE_IOS</span>(<span class="hljs-number">6</span>_0);<br></code></pre>
+
+</div><div id="wmd-preview-section-64949" class="wmd-preview-section preview-content">
+
+<h6 id="uitextinputtraits-uikit-中有这样一个类的接口-专门提供给开发者定制keyboard样式-uitextfield中有几个属性可以定制键盘样式-它们是uitextinputtraits协议中暴露出来的属性接口实现它就可以达到与系统通信定制keyboard样式的目的-其实现原理应该是当keyboard要出现时-系统以一定时序调用uitextinputtraits代理中的j接口方法取出对应的样式信息-然后展现-这个代理不仅可以服务于uitextfield-还可以用于uitextview-或者我们自定义的一些需要键盘样式的空间中-只要我们遵守并实现了这个代理">UITextInputTraits :UIKit 中有这样一个类的接口 专门提供给开发者定制keyBoard样式 , UITextfield中有几个属性可以定制键盘样式 , 它们是UITextInputTraits协议中暴露出来的属性接口,实现它就可以达到与系统通信,定制keyboard样式的目的, 其实现原理应该是当keyboard要出现时, 系统以一定时序调用UITextInputTraits代理中的j接口方法取出对应的样式信息, 然后展现 , 这个代理不仅可以服务于UITextfield , 还可以用于UITextView 或者我们自定义的一些需要键盘样式的空间中, 只要我们遵守并实现了这个代理</h6>
+
+</div><div id="wmd-preview-section-64950" class="wmd-preview-section preview-content">
+
+<h6 id="以下是这个协议的头文件信息">以下是这个协议的头文件信息</h6>
+
+</div><div id="wmd-preview-section-64951" class="wmd-preview-section preview-content">
+
+<pre class="prettyprint hljs-dark"><code class="language-objectivec hljs"><span class="hljs-comment">//</span><br><span class="hljs-comment">// UITextInputTraits</span><br><span class="hljs-comment">//</span><br><span class="hljs-comment">//  提供定制文本工具的控件特性(或者其他可能需要响应键盘输入的自定义对象)</span><br><span class="hljs-comment">// Controls features of text widgets (or other custom objects that might wish </span><br><span class="hljs-comment">// to respond to keyboard input).</span><br><span class="hljs-comment">//</span><br><span class="hljs-class"><span class="hljs-keyword">@protocol</span> <span class="hljs-title">UITextInputTraits</span> &lt;<span class="hljs-title">NSObject</span>&gt;</span><br><br><span class="hljs-keyword">@optional</span><br><br><span class="hljs-comment">// 是否为密文输入</span><br><span class="hljs-keyword">@property</span>(<span class="hljs-keyword">nonatomic</span>,getter=isSecureTextEntry) <span class="hljs-built_in">BOOL</span> secureTextEntry;  <br><span class="hljs-comment">// 首字母大写样式</span><br><span class="hljs-comment">//    UITextAutocapitalizationTypeNone,     默认无样式</span><br><span class="hljs-comment">//    UITextAutocapitalizationTypeWords,    以单词为单位</span><br><span class="hljs-comment">//    UITextAutocapitalizationTypeSentences,以句子为单位(这是默认值)</span><br><span class="hljs-comment">//    UITextAutocapitalizationTypeAllCharacters,每个字符都大写</span><br><br><span class="hljs-keyword">@property</span>(<span class="hljs-keyword">nonatomic</span>) <span class="hljs-built_in">UITextAutocapitalizationType</span> autocapitalizationType;<br><span class="hljs-comment">//   自动修正</span><br><span class="hljs-comment">//   UITextAutocorrectionTypeDefault,  由系统自己决定是否开启(默认值)</span><br><span class="hljs-comment">//   UITextAutocorrectionTypeNo,       开启</span><br><span class="hljs-comment">//   UITextAutocorrectionTypeYes,      关闭</span><br><br><span class="hljs-keyword">@property</span>(<span class="hljs-keyword">nonatomic</span>) <span class="hljs-built_in">UITextAutocorrectionType</span> autocorrectionType; <br><br><span class="hljs-comment">// 拼写检查  同上 有三个选项          </span><br><span class="hljs-keyword">@property</span>(<span class="hljs-keyword">nonatomic</span>) <span class="hljs-built_in">UITextSpellCheckingType</span> spellCheckingType <span class="hljs-built_in">NS_AVAILABLE_IOS</span>(<span class="hljs-number">5</span>_0);<br><br><br><span class="hljs-comment">//  键盘样式</span><br><span class="hljs-comment">//   UIKeyboardTypeDefault,       默认样式 , 就是我们见到的最多的那种</span><br><span class="hljs-comment">//   UIKeyboardTypeASCIICapable,  ASCII码样式  </span><br><span class="hljs-comment">//   UIKeyboardTypeNumbersAndPunctuation,  数字和标点符号</span><br><span class="hljs-comment">//   UIKeyboardTypeURL,             网址URL符号键盘</span><br><span class="hljs-comment">//   UIKeyboardTypeNumberPad,       纯数字键盘</span><br><span class="hljs-comment">//   UIKeyboardTypePhonePad,        电话号码键盘  1-9, *, 0, #,</span><br><span class="hljs-comment">//   UIKeyboardTypeNamePhonePad,    联系人键盘</span><br><span class="hljs-comment">//   UIKeyboardTypeEmailAddress,         电子邮件</span><br><span class="hljs-comment">//   UIKeyboardTypeDecimalPad 带小数点的数字键盘   </span><br><span class="hljs-comment">//   UIKeyboardTypeTwitter 推特专用键盘</span><br><span class="hljs-comment">//   UIKeyboardTypeWebSearch iOS7.0以后  网页搜索键盘</span><br><br><span class="hljs-keyword">@property</span>(<span class="hljs-keyword">nonatomic</span>) <span class="hljs-built_in">UIKeyboardType</span> keyboardType;                         <br><br><span class="hljs-comment">// 键盘外观显示  字面意思已经很明显了 就不多说了 本来有4个属性 但是第四个已经禁用 , 它和第二个是一个意思</span><br><span class="hljs-comment">//  UIKeyboardAppearanceDefault,     </span><br><span class="hljs-comment">//  UIKeyboardAppearanceDark NS_ENUM_AVAILABLE_IOS(7_0),</span><br><span class="hljs-comment">//  UIKeyboardAppearanceLight NS_ENUM_AVAILABLE_IOS(7_0),</span><br><span class="hljs-keyword">@property</span>(<span class="hljs-keyword">nonatomic</span>) <span class="hljs-built_in">UIKeyboardAppearance</span> keyboardAppearance;             <br><br><span class="hljs-comment">// 返回键样式 就是键盘右下角的那个按钮 有一个delegate方法 shouldreturn和这个按键对应, 我一般用这个按键做结束输入提交功能信息</span><br><span class="hljs-comment">// 有以下几种样式  这个也不用多说 一般后缀是什么 按钮就显示什么 default显示return</span><br><span class="hljs-comment">/*  UIReturnKeyDefault,<br>    UIReturnKeyGo,<br>    UIReturnKeyGoogle,<br>    UIReturnKeyJoin,<br>    UIReturnKeyNext,<br>    UIReturnKeyRoute,<br>    UIReturnKeySearch,<br>    UIReturnKeySend,<br>    UIReturnKeyYahoo,<br>    UIReturnKeyDone,<br>    UIReturnKeyEmergencyCall,<br>    UIReturnKeyContinue NS_ENUM_AVAILABLE_IOS(9_0),<br> */</span><br><span class="hljs-keyword">@property</span>(<span class="hljs-keyword">nonatomic</span>) <span class="hljs-built_in">UIReturnKeyType</span> returnKeyType;  <br><span class="hljs-comment">// 这个属性设置为YES时 如果文本框内没有字符, return按钮就会变为灰色禁用                     </span><br><span class="hljs-keyword">@property</span>(<span class="hljs-keyword">nonatomic</span>) <span class="hljs-built_in">BOOL</span> enablesReturnKeyAutomatically;                  <span class="hljs-comment">// default is NO (when YES, will automatically disable return key when text widget has zero-length contents, and will automatically enable when text widget has non-zero-length contents)</span><br><br><br><span class="hljs-keyword">@end</span><br></code></pre>
+
+</div><div id="wmd-preview-section-64952" class="wmd-preview-section preview-content">
+
+<h5 id="uimenucontroller相关设置">· UIMenuController相关设置</h5>
+
+</div><div id="wmd-preview-section-64953" class="wmd-preview-section preview-content">
+
+<h6 id="在用户与文本框交互时-可能会使用系统的复制粘贴剪切等功能-这时就会有一个uimenucontroller出来与用户交互-就是我们长按或者双击文本框跳出来的黑色选框-上面有copy-cut-paste-select-all-等等选项-这个视图是可以定制的-uikit中有对应的api-而文本框具体能响应那种操作也可以有开发者决定-在输入密码时我们通常不希望用户使用其他地方复制来的信息或者复制密码框里的文本-这都可以通过重写uirespond的方法">在用户与文本框交互时 , 可能会使用系统的复制,粘贴,剪切等功能, 这时就会有一个UIMenuController出来与用户交互, 就是我们长按或者双击文本框跳出来的黑色选框, 上面有copy , cut , paste , select all 等等选项, 这个视图是可以定制的, UIKit中有对应的api ,而文本框具体能响应那种操作,也可以有开发者决定, 在输入密码时,我们通常不希望用户使用其他地方复制来的信息或者复制密码框里的文本, 这都可以通过重写UIRespond的方法</h6>
+
+</div><div id="wmd-preview-section-64954" class="wmd-preview-section preview-content">
+
+<h6 id="boolcanperformactionselaction-withsenderidsender来实现">- (BOOL)canPerformAction:(SEL)action withSender:(id)sender来实现</h6>
+
+</div><div id="wmd-preview-section-64955" class="wmd-preview-section preview-content">
+
+<h6 id="具体方法">具体方法:</h6>
+
+</div><div id="wmd-preview-section-64956" class="wmd-preview-section preview-content">
+
+<pre class="prettyprint hljs-dark"><code class="language-objectivec hljs">- (<span class="hljs-built_in">BOOL</span>)canPerformAction:(SEL)action withSender:(<span class="hljs-keyword">id</span>)sender<br>{<br><span class="hljs-comment">// 可以在这里log到系统在我们双击或长按文本框时都掉了什么方法 , 调了几次</span><br><span class="hljs-comment">// 文本框中没有字符时,是不会跳出select和cut , copy选项的 只有一个paste</span><br><span class="hljs-comment">// 我通过实验发现文本框中没有值和有值的时候action的数量和种类是固定的,猜测就是在这个方法中 父类针对文本中是否有字符返回是否可以复制或粘贴</span><br>    <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"%@"</span> ,<span class="hljs-built_in">NSStringFromSelector</span>( action));<br>      <span class="hljs-keyword">if</span> (action == <span class="hljs-keyword">@selector</span>(paste:)<br>        || action == <span class="hljs-keyword">@selector</span>(<span class="hljs-keyword">copy</span>)<br>        || action == <span class="hljs-keyword">@selector</span>(cut:)) <br>        {<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">NO</span>;<br>        }<br>    <span class="hljs-comment">//我们只阻止复制和粘贴 , 剪切 这三个选项 其他的还是交个系统决定</span><br>    <span class="hljs-keyword">return</span> [<span class="hljs-keyword">super</span> canPerformAction:action withSender:sender];<br>}<br></code></pre>
+
+</div><div id="wmd-preview-section-64957" class="wmd-preview-section preview-content">
+
+<h6 id="uimenucontroller是单例-只能用sharedmenucontroller来获取实例-用alloc-init会崩溃报错-以下是为一个文本框添加一个uimenucontroller选项按钮的方法">UIMenuController是单例 , 只能用sharedMenuController来获取实例, 用alloc init会崩溃报错 ,  以下是为一个文本框添加一个UIMenuController选项按钮的方法</h6>
+
+</div><div id="wmd-preview-section-64958" class="wmd-preview-section preview-content">
+
+<h6 id="不止文本框可以呼出uimenucontroller-任何一个uirespond都能呼出uimenucontroller-可以通过uimenucontroller头文件提供的接口自定义uimenucontroller的显示时机通过menuitems数组来控制uimenucontroller的显示选项">不止文本框可以呼出UIMenuController , 任何一个UIRespond都能呼出UIMenuController , 可以通过UIMenuController头文件提供的接口自定义UIMenuController的显示时机,通过menuItems数组来控制UIMenuController的显示选项</h6>
+
+</div><div id="wmd-preview-section-64959" class="wmd-preview-section preview-content">
+
+<h6 id="仔细看的大神们可能会注意到-我并没有在这个自定义类中的任何时机移除自己添加的item按钮-因为uimenucontroller是个单例-如果我现在有abc三个自定义thtextfield文本框-若我再dealloc中写了移除item的代码-那么最先销毁的thtextfield就会带走这个item-而后两个就掉不出这个按钮了-因为无论添加几次-这个item只在内存中有一份-移除一次它就没了所以索性不移除了-在系统通过anperformactionselaction-withsenderidsender这个方法询问是否显示我的自定义item时-return-yes就好了">仔细看的大神们可能会注意到 我并没有在这个自定义类中的任何时机移除自己添加的item按钮, 因为UIMenuController是个单例, 如果我现在有ABC三个自定义THTextField文本框, 若我再dealloc中写了移除item的代码 , 那么最先销毁的THTextField就会带走这个item , 而后两个就掉不出这个按钮了, 因为无论添加几次, 这个item只在内存中有一份, 移除一次它就没了,所以索性不移除了, 在系统通过anPerformAction:(SEL)action withSender:(id)sender这个方法询问是否显示我的自定义item时 , return YES就好了.</h6>
+
+</div><div id="wmd-preview-section-64960" class="wmd-preview-section preview-content">
+
+<pre class="prettyprint hljs-dark"><code class="language-objectivec hljs"><span class="hljs-class"><span class="hljs-keyword">@implementation</span> <span class="hljs-title">THTextField</span></span><br>- (instancetype)initWithFrame:(<span class="hljs-built_in">CGRect</span>)frame<br>{<br>    <span class="hljs-keyword">if</span> ( <span class="hljs-keyword">self</span> = [<span class="hljs-keyword">super</span> initWithFrame:frame]) {<br>        <span class="hljs-built_in">UIMenuController</span> *menu = [<span class="hljs-built_in">UIMenuController</span> sharedMenuController];<br>        <span class="hljs-built_in">NSMutableArray</span> *arrM = menu<span class="hljs-variable">.menuItems</span><span class="hljs-variable">.mutableCopy</span> ;<br>        <span class="hljs-keyword">if</span> (arrM == <span class="hljs-literal">nil</span>) {<br>            arrM = [<span class="hljs-built_in">NSMutableArray</span> array];<br>        }<br>        [arrM addObject: [[<span class="hljs-built_in">UIMenuItem</span> alloc] initWithTitle:<span class="hljs-string">@"天昊"</span> action:<span class="hljs-keyword">@selector</span>(tianhao)]];<br>        menu<span class="hljs-variable">.menuItems</span> = arrM<span class="hljs-variable">.copy</span> ;<br>    }<br>       <span class="hljs-keyword">return</span> <span class="hljs-keyword">self</span> ;<br>}<br>- (<span class="hljs-built_in">BOOL</span>)canPerformAction:(SEL)action withSender:(<span class="hljs-keyword">id</span>)sender<br>{<br><br>    <span class="hljs-keyword">if</span> (action == <span class="hljs-keyword">@selector</span>(tianhao)) {<br>        <span class="hljs-keyword">return</span>  <span class="hljs-literal">YES</span> ;<br>    }<br>    <span class="hljs-keyword">return</span> [<span class="hljs-keyword">super</span> canPerformAction:action withSender:sender];<br>}<br><br>- (<span class="hljs-keyword">void</span>)tianhao<br>{<br>    <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"天昊"</span>);<br>}<br><span class="hljs-keyword">@end</span><br></code></pre>
+
+</div><div id="wmd-preview-section-64961" class="wmd-preview-section preview-content">
+
+<h5 id="自定义uitextfield方法">· 自定义UITextField方法</h5>
+
+</div><div id="wmd-preview-section-64962" class="wmd-preview-section preview-content">
+
+<h6 id="在uitextfield的头文件中有这样一段接口">在UITextfield的头文件中有这样一段接口:</h6>
+
+</div><div id="wmd-preview-section-64963" class="wmd-preview-section preview-content">
+
+<pre class="prettyprint hljs-dark"><code class="language-objectivec hljs"><span class="hljs-comment">// drawing and positioning overrides</span><br>- (<span class="hljs-built_in">CGRect</span>)borderRectForBounds:(<span class="hljs-built_in">CGRect</span>)bounds;<br>- (<span class="hljs-built_in">CGRect</span>)textRectForBounds:(<span class="hljs-built_in">CGRect</span>)bounds;<br>- (<span class="hljs-built_in">CGRect</span>)placeholderRectForBounds:(<span class="hljs-built_in">CGRect</span>)bounds;<br>- (<span class="hljs-built_in">CGRect</span>)editingRectForBounds:(<span class="hljs-built_in">CGRect</span>)bounds;<br>- (<span class="hljs-built_in">CGRect</span>)clearButtonRectForBounds:(<span class="hljs-built_in">CGRect</span>)bounds;<br>- (<span class="hljs-built_in">CGRect</span>)leftViewRectForBounds:(<span class="hljs-built_in">CGRect</span>)bounds;<br>- (<span class="hljs-built_in">CGRect</span>)rightViewRectForBounds:(<span class="hljs-built_in">CGRect</span>)bounds;<br><br><span class="hljs-comment">// 这两个方法是系统在已经得到了文本区域或占位文本区域后 将要把对应的文字画到矩形区域是调用, 知道了这个调用时机 , 就可以重写这个方法来实现一些特定的效果了(比如让每个字都倾斜一定角度, 修改每个字的颜色让它们都不同等等)</span><br>- (<span class="hljs-keyword">void</span>)drawTextInRect:(<span class="hljs-built_in">CGRect</span>)rect;<br>- (<span class="hljs-keyword">void</span>)drawPlaceholderInRect:(<span class="hljs-built_in">CGRect</span>)rect;<br></code></pre>
+
+</div><div id="wmd-preview-section-64964" class="wmd-preview-section preview-content">
+
+<h6 id="注释中写着-drawing-and-positioning-overrides">注释中写着 drawing and positioning overrides</h6>
+
+</div><div id="wmd-preview-section-64965" class="wmd-preview-section preview-content">
+
+<h6 id="没错-就是提供给自定义子类重写的方法-在这些方法里返回对应的cgrect-就会让系统在渲染我们的自定义文本框是将边框文本占位文本编辑区域clearbutton左右视图画在我们指定的rect中-我一般的做法是先在方法体中用super的该方法得到原本的rect-然后做适当修改-我们哪第一个边框rect做例子其他几个类比着来都是一样的">没错 , 就是提供给自定义子类重写的方法 , 在这些方法里返回对应的CGRect ,就会让系统在渲染我们的自定义文本框是将边框,文本,占位文本,编辑区域,clearButton,左,右视图画在我们指定的rect中, 我一般的做法是先在方法体中用super的该方法得到原本的rect 然后做适当修改, 我们哪第一个边框rect做例子(其他几个类比着来,都是一样的):</h6>
+
+</div><div id="wmd-preview-section-65506" class="wmd-preview-section preview-content">
+
+<pre class="prettyprint hljs-dark"><code class="language-objectivec hljs">- (<span class="hljs-built_in">CGRect</span>)borderRectForBounds:(<span class="hljs-built_in">CGRect</span>)bounds<br>{<br><span class="hljs-comment">// 先调用父类方法 得到原始frame  再自行修改返回</span><br>    <span class="hljs-built_in">CGRect</span> originFrame = [<span class="hljs-keyword">super</span> borderRectForBounds:bounds];<br>    originFrame<span class="hljs-variable">.origin</span><span class="hljs-variable">.x</span> += <span class="hljs-number">10</span> ;<br>    <span class="hljs-keyword">return</span> originFrame;<br>}<br></code></pre>
+
+<p>下一篇来讲UITextfield的交互</p></div><div id="wmd-preview-section-footnotes" class="preview-content"></div></div></body></html>
+    </div>
+    <footer>
+        
+        
+		<div class="bdsharebuttonbox">
+	<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+	<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+	<a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a>
+	<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="bds_more" data-cmd="more"></a>
+	<a href="#" class="bds_count" data-cmd="count"></a>
+</div>
+<script>
+window._bd_share_config=
+{
+	"common":{
+		"bdSnsKey":{},
+		"bdText":"",
+		"bdMini":"2",
+		"bdMiniList":false,
+		"bdPic":"",
+		"bdStyle":"0",
+		"bdSize":"24"
+	},
+	"share":{},
+	"image":{
+		"viewList":["qzone","tsina","tqq","renren","weixin","fbook","twi"],
+		"viewText":"分享到：",
+		"viewSize":"24"
+	},
+	"selectShare":{
+		"bdContainerClass":null,
+		"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin","fbook","twi"]
+	}
+};
+with(document)0[
+	(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)
+];
+</script>    
+        <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+ <nav id="pagination" >
+    
+    <a href="/2016/07/04/test/" class="alignleft prev" title="test">test</a>
+    
+    
+    <a href="/2014/07/04/a-test-post/" class="alignright next" title="UITextField汇总一:呈现篇">UITextField汇总一:呈现篇</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+
+
+	
+	<section id="comment">
+		<!-- 多说评论框 start -->
+		<div class="ds-thread" data-thread-key="2016/07/04/untitled/" data-title="" data-url="www.yoursite.com/2016/07/04/untitled/"></div>
+		<!-- 多说评论框 end -->
+		<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+		<script type="text/javascript">
+		var duoshuoQuery = {short_name:""};
+		(function() {
+			var ds = document.createElement('script');
+			ds.type = 'text/javascript';ds.async = true;
+			ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+			ds.charset = 'UTF-8';
+			(document.getElementsByTagName('head')[0] 
+			 || document.getElementsByTagName('body')[0]).appendChild(ds);
+		})();
+		</script>
+		<!-- 多说公共JS代码 end -->
+	</section>
+	
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜索">
+    <input type="hidden" name="q" value="site:www.yoursite.com">
+  </form>
+</div>
+
+  
+
+  
+<div class="widget tagcloud">
+  <h3 class="title">标签云</h3>
+  <div class="entry">
+    <a href="/tags/UITextField/" style="font-size: 10px;">UITextField</a>
+  </div>
+</div>
+
+
+  <iframe width="100%" height="140" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=1923610190&verifier=6af5ad6a&colors=fafafa,fafafa,666666,0082cb,ecfbfd&dpc=1"></iframe>
+
+  <div class="widget tag">
+<h3 class="title">友情链接</h3>
+<ul class="entry">
+<li><a href="http://opiece.me" title="Chillax's Blog" target="_blank">Chillax</a></li>
+</ul>
+</div>
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer"><div id="footer" >
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/huangjunhui/concise" target="_blank" title="Concise">Concise</a> © 2013 
+		
+		<a href="www.yoursite.com/about" target="_blank" title="李天昊">李天昊</a>
+		
+		</p>
+</div>
+</footer>
+  <script src="//libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/counter.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+<div id="totop" style="position:fixed;bottom:100px;right:10px;cursor: pointer;">
+<a title="返回顶部"><img src="/imgs/scrollup.png"/></a>
+</div>
+<script src="/js/totop.js"></script>
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+</body>
+</html>
+
+
