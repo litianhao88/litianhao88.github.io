@@ -1,0 +1,273 @@
+
+
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script type="text/javascript" src="http://tajs.qq.com/stats?sId=44218032" charset="UTF-8"></script>
+  <script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?7192fa361f5cabb11d8a22de41c1ba8f";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+  
+  <title>iOS文件操作 | 白驹过隙 点滴于心</title>
+  <meta name="author" content="李天昊">
+  
+  <meta name="description" content="李天昊的技术博">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="iOS文件操作"/>
+  <meta property="og:site_name" content="白驹过隙 点滴于心"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/imgs/favicon.ico" rel="icon" type="image/x-ico">
+  <link rel="alternate" href="/atom.xml" title="白驹过隙 点滴于心" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//libs.baidu.com/jquery/1.8.0/jquery.min.js"></script>
+</head>
+
+
+<body>
+  <header><div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/imgs/logo.png" alt="白驹过隙 点滴于心" title="白驹过隙 点滴于心"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name">白驹过隙 点滴于心</h1>
+				<h2 class="blog-motto">Talk is cheap. Show me the code!</h2>
+			</div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li> <a href="/atom.xml">RSS</a> </li>
+				</ul>
+			</nav>			
+</div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header class="article-info clearfix">
+  <h1 itemprop="name">
+	iOS文件操作
+  </h1>
+  <p class="article-author">By
+    
+      <a href="www.yoursite.com" title="李天昊">李天昊</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2014-08-20T11:20:10.000Z" itemprop="datePublished">2014-08-20</time>
+    Update date:<time datetime="2016-07-04T13:41:13.000Z" itemprop="dateModified">2016-07-04</time>
+    
+  </p>
+</header>
+    <div class="entry">
+		
+        <p>iOS的沙盒机制，应用只能访问自己应用目录下的文件。iOS不像android，没有SD卡概念，不能直接访问图像、视频等内容。iOS应用产生的内容，如图像、文件、缓存内容等都必须存储在自己的沙盒内。默认情况下，每个沙盒含有3个文件夹：Documents, Library 和 tmp。Library包含Caches、Preferences目录。</p>
+<p>Documents：苹果建议将程序创建产生的文件以及应用浏览产生的文件数据保存在该目录下，iTunes备份和恢复的时候会包括此目录<br>Library：存储程序的默认设置或其它状态信息；</p>
+<p>Library/Caches：存放缓存文件，保存应用的持久化数据，用于应用升级或者应用关闭后的数据保存，不会被itunes同步，所以为了减少同步的时间，可以考虑将一些比较大的文件而又不需要备份的文件放到这个目录下。</p>
+<p>tmp：提供一个即时创建临时文件的地方，但不需要持久化，在应用关闭后，该目录下的数据将删除，也可能系统在程序不运行的时候清除。</p>
+<p>APP  Sandbox</p>
+<p>iOS怎么获取沙盒路径，怎么操作文件呢？下面给出答案。</p>
+<p>获取应用沙盒根路径：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">-(<span class="keyword">void</span>)dirHome&#123;  </div><div class="line">    <span class="built_in">NSString</span> *dirHome=<span class="built_in">NSHomeDirectory</span>();      </div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"app_home: %@"</span>,dirHome);  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>获取Documents目录路径：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//获取Documents目录  </span></div><div class="line">-(<span class="built_in">NSString</span> *)dirDoc&#123;  </div><div class="line">    <span class="comment">//[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];  </span></div><div class="line">    <span class="built_in">NSArray</span> *paths = <span class="built_in">NSSearchPathForDirectoriesInDomains</span>(<span class="built_in">NSDocumentDirectory</span>, <span class="built_in">NSUserDomainMask</span>, <span class="literal">YES</span>);  </div><div class="line">    <span class="built_in">NSString</span> *documentsDirectory = [paths objectAtIndex:<span class="number">0</span>];  </div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"app_home_doc: %@"</span>,documentsDirectory);  </div><div class="line">    <span class="keyword">return</span> documentsDirectory;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>获取Library目录路径：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//获取Library目录  </span></div><div class="line">-(<span class="keyword">void</span>)dirLib&#123;  </div><div class="line">    <span class="comment">//[NSHomeDirectory() stringByAppendingPathComponent:@"Library"];  </span></div><div class="line">    <span class="built_in">NSArray</span> *paths = <span class="built_in">NSSearchPathForDirectoriesInDomains</span>(<span class="built_in">NSLibraryDirectory</span>, <span class="built_in">NSUserDomainMask</span>, <span class="literal">YES</span>);  </div><div class="line">    <span class="built_in">NSString</span> *libraryDirectory = [paths objectAtIndex:<span class="number">0</span>];  </div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"app_home_lib: %@"</span>,libraryDirectory);  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>获取Cache目录路径：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//获取Cache目录  </span></div><div class="line">-(<span class="keyword">void</span>)dirCache&#123;  </div><div class="line">    <span class="built_in">NSArray</span> *cacPath = <span class="built_in">NSSearchPathForDirectoriesInDomains</span>(<span class="built_in">NSCachesDirectory</span>, <span class="built_in">NSUserDomainMask</span>, <span class="literal">YES</span>);  </div><div class="line">    <span class="built_in">NSString</span> *cachePath = [cacPath objectAtIndex:<span class="number">0</span>];  </div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"app_home_lib_cache: %@"</span>,cachePath);  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>获取Tmp目录路径：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//获取Tmp目录  </span></div><div class="line">-(<span class="keyword">void</span>)dirTmp&#123;  </div><div class="line">    <span class="comment">//[NSHomeDirectory() stringByAppendingPathComponent:@"tmp"];  </span></div><div class="line">    <span class="built_in">NSString</span> *tmpDirectory = <span class="built_in">NSTemporaryDirectory</span>();  </div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"app_home_tmp: %@"</span>,tmpDirectory);  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>创建文件夹：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//创建文件夹  </span></div><div class="line">-(<span class="keyword">void</span> *)createDir&#123;  </div><div class="line">    <span class="built_in">NSString</span> *documentsPath =[<span class="keyword">self</span> dirDoc];  </div><div class="line">    <span class="built_in">NSFileManager</span> *fileManager = [<span class="built_in">NSFileManager</span> defaultManager];  </div><div class="line">    <span class="built_in">NSString</span> *testDirectory = [documentsPath stringByAppendingPathComponent:<span class="string">@"test"</span>];  </div><div class="line">    <span class="comment">// 创建目录  </span></div><div class="line">    <span class="built_in">BOOL</span> res=[fileManager createDirectoryAtPath:testDirectory withIntermediateDirectories:<span class="literal">YES</span> attributes:<span class="literal">nil</span> error:<span class="literal">nil</span>];  </div><div class="line">    <span class="keyword">if</span> (res) &#123;  </div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"文件夹创建成功"</span>);  </div><div class="line">    &#125;<span class="keyword">else</span>  </div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"文件夹创建失败"</span>);  </div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<p>创建文件<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//创建文件  </span></div><div class="line">-(<span class="keyword">void</span> *)createFile&#123;  </div><div class="line">    <span class="built_in">NSString</span> *documentsPath =[<span class="keyword">self</span> dirDoc];  </div><div class="line">    <span class="built_in">NSString</span> *testDirectory = [documentsPath stringByAppendingPathComponent:<span class="string">@"test"</span>];  </div><div class="line">    <span class="built_in">NSFileManager</span> *fileManager = [<span class="built_in">NSFileManager</span> defaultManager];  </div><div class="line">    <span class="built_in">NSString</span> *testPath = [testDirectory stringByAppendingPathComponent:<span class="string">@"test.txt"</span>];  </div><div class="line">    <span class="built_in">BOOL</span> res=[fileManager createFileAtPath:testPath contents:<span class="literal">nil</span> attributes:<span class="literal">nil</span>];  </div><div class="line">    <span class="keyword">if</span> (res) &#123;  </div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"文件创建成功: %@"</span> ,testPath);  </div><div class="line">    &#125;<span class="keyword">else</span>  </div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"文件创建失败"</span>);  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>写数据到文件：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//写文件  </span></div><div class="line">-(<span class="keyword">void</span>)writeFile&#123;  </div><div class="line">    <span class="built_in">NSString</span> *documentsPath =[<span class="keyword">self</span> dirDoc];  </div><div class="line">    <span class="built_in">NSString</span> *testDirectory = [documentsPath stringByAppendingPathComponent:<span class="string">@"test"</span>];  </div><div class="line">    <span class="built_in">NSString</span> *testPath = [testDirectory stringByAppendingPathComponent:<span class="string">@"test.txt"</span>];  </div><div class="line">    <span class="built_in">NSString</span> *content=<span class="string">@"测试写入内容！"</span>;  </div><div class="line">    <span class="built_in">BOOL</span> res=[content writeToFile:testPath atomically:<span class="literal">YES</span> encoding:<span class="built_in">NSUTF8StringEncoding</span> error:<span class="literal">nil</span>];  </div><div class="line">    <span class="keyword">if</span> (res) &#123;  </div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"文件写入成功"</span>);  </div><div class="line">    &#125;<span class="keyword">else</span>  </div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"文件写入失败"</span>);  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>读文件数据：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//读文件  </span></div><div class="line">-(<span class="keyword">void</span>)readFile&#123;  </div><div class="line">    <span class="built_in">NSString</span> *documentsPath =[<span class="keyword">self</span> dirDoc];  </div><div class="line">    <span class="built_in">NSString</span> *testDirectory = [documentsPath stringByAppendingPathComponent:<span class="string">@"test"</span>];  </div><div class="line">    <span class="built_in">NSString</span> *testPath = [testDirectory stringByAppendingPathComponent:<span class="string">@"test.txt"</span>];  </div><div class="line"><span class="comment">//    NSData *data = [NSData dataWithContentsOfFile:testPath];  </span></div><div class="line"><span class="comment">//    NSLog(@"文件读取成功: %@",[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);  </span></div><div class="line">    <span class="built_in">NSString</span> *content=[<span class="built_in">NSString</span> stringWithContentsOfFile:testPath encoding:<span class="built_in">NSUTF8StringEncoding</span> error:<span class="literal">nil</span>];  </div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"文件读取成功: %@"</span>,content);  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>文件属性：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//文件属性  </span></div><div class="line">-(<span class="keyword">void</span>)fileAttriutes&#123;  </div><div class="line">    <span class="built_in">NSString</span> *documentsPath =[<span class="keyword">self</span> dirDoc];  </div><div class="line">    <span class="built_in">NSString</span> *testDirectory = [documentsPath stringByAppendingPathComponent:<span class="string">@"test"</span>];  </div><div class="line">    <span class="built_in">NSFileManager</span> *fileManager = [<span class="built_in">NSFileManager</span> defaultManager];  </div><div class="line">    <span class="built_in">NSString</span> *testPath = [testDirectory stringByAppendingPathComponent:<span class="string">@"test.txt"</span>];  </div><div class="line">    <span class="built_in">NSDictionary</span> *fileAttributes = [fileManager attributesOfItemAtPath:testPath error:<span class="literal">nil</span>];     </div><div class="line">    <span class="built_in">NSArray</span> *keys;  </div><div class="line">    <span class="keyword">id</span> key, value;  </div><div class="line">    keys = [fileAttributes allKeys];  </div><div class="line">    <span class="keyword">int</span> count = [keys count];  </div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++)  </div><div class="line">    &#123;  </div><div class="line">        key = [keys objectAtIndex: i];  </div><div class="line">        value = [fileAttributes objectForKey: key];  </div><div class="line">        <span class="built_in">NSLog</span> (<span class="string">@"Key: %@ for value: %@"</span>, key, value);  </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>删除文件：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//删除文件  </span></div><div class="line">-(<span class="keyword">void</span>)deleteFile&#123;  </div><div class="line">    <span class="built_in">NSString</span> *documentsPath =[<span class="keyword">self</span> dirDoc];  </div><div class="line">    <span class="built_in">NSString</span> *testDirectory = [documentsPath stringByAppendingPathComponent:<span class="string">@"test"</span>];  </div><div class="line">    <span class="built_in">NSFileManager</span> *fileManager = [<span class="built_in">NSFileManager</span> defaultManager];  </div><div class="line">    <span class="built_in">NSString</span> *testPath = [testDirectory stringByAppendingPathComponent:<span class="string">@"test.txt"</span>];     </div><div class="line">    <span class="built_in">BOOL</span> res=[fileManager removeItemAtPath:testPath error:<span class="literal">nil</span>];  </div><div class="line">    <span class="keyword">if</span> (res) &#123;  </div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"文件删除成功"</span>);  </div><div class="line">    &#125;<span class="keyword">else</span>  </div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"文件删除失败"</span>);     </div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"文件是否存在: %@"</span>,[fileManager isExecutableFileAtPath:testPath]?<span class="string">@"YES"</span>:<span class="string">@"NO"</span>);  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+    </div>
+    <footer>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/文件操作/">文件操作</a>
+  </div>
+
+		<div class="bdsharebuttonbox">
+	<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+	<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+	<a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a>
+	<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="bds_more" data-cmd="more"></a>
+	<a href="#" class="bds_count" data-cmd="count"></a>
+</div>
+<script>
+window._bd_share_config=
+{
+	"common":{
+		"bdSnsKey":{},
+		"bdText":"",
+		"bdMini":"2",
+		"bdMiniList":false,
+		"bdPic":"",
+		"bdStyle":"0",
+		"bdSize":"24"
+	},
+	"share":{},
+	"image":{
+		"viewList":["qzone","tsina","tqq","renren","weixin","fbook","twi"],
+		"viewText":"分享到：",
+		"viewSize":"24"
+	},
+	"selectShare":{
+		"bdContainerClass":null,
+		"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin","fbook","twi"]
+	}
+};
+with(document)0[
+	(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)
+];
+</script>    
+        <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+ <nav id="pagination" >
+    
+    <a href="/2014/08/20/runloop/" class="alignleft prev" title="贝塞尔曲线（UIBezierPath）属性、方法汇总">贝塞尔曲线（UIBezierPath）属性、方法汇总</a>
+    
+    
+    <a href="/2014/08/04/UIBezierPath/" class="alignright next" title="runloop备忘">runloop备忘</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+
+
+	
+	<section id="comment">
+		<!-- 多说评论框 start -->
+		<div class="ds-thread" data-thread-key="2014/08/20/文件操作/" data-title="iOS文件操作" data-url="www.yoursite.com/2014/08/20/文件操作/"></div>
+		<!-- 多说评论框 end -->
+		<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+		<script type="text/javascript">
+		var duoshuoQuery = {short_name:""};
+		(function() {
+			var ds = document.createElement('script');
+			ds.type = 'text/javascript';ds.async = true;
+			ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+			ds.charset = 'UTF-8';
+			(document.getElementsByTagName('head')[0] 
+			 || document.getElementsByTagName('body')[0]).appendChild(ds);
+		})();
+		</script>
+		<!-- 多说公共JS代码 end -->
+	</section>
+	
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tagcloud">
+  <h3 class="title">Tag Cloud</h3>
+  <div class="entry">
+    <a href="/tags/UIBezierPath/" style="font-size: 10px;">UIBezierPath</a> <a href="/tags/UITextField/" style="font-size: 20px;">UITextField</a> <a href="/tags/runloop/" style="font-size: 10px;">runloop</a> <a href="/tags/文件操作/" style="font-size: 10px;">文件操作</a>
+  </div>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer"><div id="footer" >
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/huangjunhui/concise" target="_blank" title="Concise">Concise</a> © 2013 
+		
+		<a href="www.yoursite.com/about" target="_blank" title="李天昊">李天昊</a>
+		
+		</p>
+</div>
+</footer>
+  <script src="//libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/counter.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+<div id="totop" style="position:fixed;bottom:100px;right:10px;cursor: pointer;">
+<a title="返回顶部"><img src="/imgs/scrollup.png"/></a>
+</div>
+<script src="/js/totop.js"></script>
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+</body>
+</html>
+
+
