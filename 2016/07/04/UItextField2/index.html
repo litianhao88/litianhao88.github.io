@@ -1,0 +1,292 @@
+
+
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script type="text/javascript" src="http://tajs.qq.com/stats?sId=44218032" charset="UTF-8"></script>
+  <script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?7192fa361f5cabb11d8a22de41c1ba8f";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+  
+  <title>白驹过隙 点滴于心</title>
+  <meta name="author" content="李天昊">
+  
+  <meta name="description" content="李天昊的技术博">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="白驹过隙 点滴于心"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/imgs/favicon.ico" rel="icon" type="image/x-ico">
+  <link rel="alternate" href="/atom.xml" title="白驹过隙 点滴于心" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//libs.baidu.com/jquery/1.8.0/jquery.min.js"></script>
+</head>
+
+
+<body>
+  <header><div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/imgs/logo.png" alt="白驹过隙 点滴于心" title="白驹过隙 点滴于心"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name">白驹过隙 点滴于心</h1>
+				<h2 class="blog-motto">Talk is cheap. Show me the code!</h2>
+			</div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li> <a href="/atom.xml">RSS</a> </li>
+				</ul>
+			</nav>			
+</div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header class="article-info clearfix">
+  <h1 itemprop="name">
+	
+  </h1>
+  <p class="article-author">By
+    
+      <a href="www.yoursite.com" title="李天昊">李天昊</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2016-07-04T11:38:22.000Z" itemprop="datePublished">2016-07-04</time>
+    Update date:<time datetime="2016-07-04T13:04:46.000Z" itemprop="dateModified">2016-07-04</time>
+    
+  </p>
+</header>
+    <div class="entry">
+		
+        <p>&lt;!DOCTYPE html&gt;<html><head><title>UITextField汇总二:交互篇</title><meta charset="utf-8"><link href="https://dn-maxiang.qbox.me/res-min/themes/marxico.css" rel="stylesheet"><style></style></head><body><div id="preview-contents" class="note-content"><br>                        <div id="wmd-preview" class="preview-content"></div><br>                    <div id="wmd-preview-section-24" class="wmd-preview-section preview-content"></div></div></body></html></p>
+<p><div id="wmd-preview-section-9871" class="wmd-preview-section preview-content"></div></p>
+<h1 id="uitextfield汇总二交互篇">UITextField汇总二:交互篇</h1>
+
+<p>本文为UITextField汇总第二篇:交互篇 <br><br>UITextField与用户交互起始就是靠三种方式的代码回调来完成的,本文将以这三种回调方式为展开点总结UITextField的几种常用点</p>
+
+<ul><li>三种回调 <br><br><ul><br><li>Delegate</li><br><li>Notification</li><br><li>Target-Action </li></ul></li><br></ul>
+
+<hr>
+
+<p><div id="wmd-preview-section-16044" class="wmd-preview-section preview-content"></div></p>
+<h3 id="三种回调的总览">三种回调的总览</h3>
+
+<p>总的来说,三种回调的调用时机有重复,但可以很明显的感受到三种回调方式的使用情景不尽相同, </p>
+
+<p>delegate用来得到文本框在交互开始到交互结束这一段时间的所有编辑状态,实现对应方法可以截获某一交互状态的改变,并在其中做一些自定义操作</p>
+
+<p>Target-Action 除了可以在几个编辑状态改变时获得改变信号外, 还可以监听诸如点击,双击,拖拽等UIControl中定义的事件,但是用的很少,个人感觉Target-Action与代理之间重复度蛮高的,开发中可以混着用,区分不是太明显</p>
+
+<p>Notification用来获得键盘出现到消失这一段时间的左右状态,用得最多的就是监听键盘弹出,屏幕视图上滑,键盘收回,屏幕视图下移</p><div id="wmd-preview-section-5351" class="wmd-preview-section preview-content"><br><br><h4 id="delegate回调">Delegate回调</h4><br><br><p>UITextField有一个代理对象,在交互状态改变时候,UITextField会调用这个代理对象的代理方法,我们在合适的类中实现这些代理方法,就能在一定的交互时机控制UITextField的交互情况,话不多说直接说代码:</p></div><div id="wmd-preview-section-15416" class="wmd-preview-section preview-content"><br><br><pre class="prettyprint hljs-dark"><code class="language-objectivec hljs"><span class="hljs-comment">// 当UITextField变为第一响应者后,系统调这个方法询问是否可以开始编辑 </span><br><span class="hljs-comment">// 我们可以在这里通过一些业务逻辑的判断来决定本次交互是否继续, 返回NO</span><br><span class="hljs-comment">// 则交互停止</span><br>- (<span class="hljs-built_in">BOOL</span>)textFieldShouldBeginEditing:(<span class="hljs-built_in">UITextField</span> <em>)textField;        <br><span class="hljs-comment">// 这个是系统通知我们交互编辑已经开始, 在这个方法里可以做一些文本改变的控制操作</span><br>- (<span class="hljs-keyword">void</span>)textFieldDidBeginEditing:(<span class="hljs-built_in">UITextField</span> </em>)textField;           <br><span class="hljs-comment">// 系统在这个方法询问我们是否可以结束编辑 返回YES则控件注销第一响应者</span><br>- (<span class="hljs-built_in">BOOL</span>)textFieldShouldEndEditing:(<span class="hljs-built_in">UITextField</span> <em>)textField;          <span class="hljs-comment">// return YES to allow editing to stop and to resign first responder status. NO to disallow the editing session to end</span><br><br>- (<span class="hljs-keyword">void</span>)textFieldDidEndEditing:(<span class="hljs-built_in">UITextField</span> </em>)textField;             <span class="hljs-comment">// may be called if forced even if shouldEndEditing returns NO (e.g. view removed from window) or endEditing:YES called</span><br><span class="hljs-comment">// 在文本框中某一段字符串被替换时调用这个方法 , 实现这个方法我们可以自己决定是否完成本次替换</span><br>- (<span class="hljs-built_in">BOOL</span>)textField:(<span class="hljs-built_in">UITextField</span> <em>)textField shouldChangeCharactersInRange:(<span class="hljs-built_in">NSRange</span>)range replacementString:(<span class="hljs-built_in">NSString</span> </em>)string;   <span class="hljs-comment">// return NO to not change text</span><br><span class="hljs-comment">// 在这里得到右侧按钮被点击的信息 , 并通过返回值告诉系统是否清除信息</span><br>- (<span class="hljs-built_in">BOOL</span>)textFieldShouldClear:(<span class="hljs-built_in">UITextField</span> <em>)textField;               <span class="hljs-comment">// called when clear button pressed. return NO to ignore (no notifications)</span><br><span class="hljs-comment">// 在这里得到键盘右下角return键的点击信息 并通过返回值告诉系统否接收交互 </span><br>- (<span class="hljs-built_in">BOOL</span>)textFieldShouldReturn:(<span class="hljs-built_in">UITextField</span> </em>)textField;              <span class="hljs-comment">// called when ‘return’ key pressed. return NO to ignore.</span><br><span class="hljs-keyword">@end</span><br></code></pre><br><br></div><div id="wmd-preview-section-19688" class="wmd-preview-section preview-content"><br><br><h4 id="target-action">Target-Action</h4><br><br><p>继承自UIControl的控件都可以通过以下对象方法来绑定Target-Action , 然后在指定的controlEvent发生时调用对应的方法.</p>
+
+<ul><li>(void)addTarget:(nullable id)target action:(SEL)action forControlEvents:(UIControlEvents)controlEvents;</li><br></ul>
+
+<p>文本框用的最多的几个controllEvent: <br><br>    UIControlEventEditingDidBegin          已经开始编辑 <br><br>    UIControlEventEditingChanged           编辑改变(就是文本内容被改变) <br><br>    UIControlEventEditingDidEnd              编辑已经结束 <br><br>    UIControlEventEditingDidEndOnExit    点击了return按键 注销了第一响应者 <br><br>当然文本框也可以通过 Target-Action模式监听其他controlEvent,但是这样的需求毕竟少见, 不再赘述</p>
+
+<p></p></div><div id="wmd-preview-section-27145" class="wmd-preview-section preview-content"><p></p>
+<h4 id="notification">Notification</h4>
+
+<p>我们可以在通知中心z注册一下三个通知名来获得UITextField的三种状态改变时机,它们依次是已经开始编辑, 已经结束编辑,编辑内容改变 ,  <br><br>UIKIT_EXTERN NSString <em>const UITextFieldTextDidBeginEditingNotification; <br><br>UIKIT_EXTERN NSString </em>const UITextFieldTextDidEndEditingNotification; <br><br>UIKIT_EXTERN NSString *const UITextFieldTextDidChangeNotification; <br><br>说实话这个也是和前面代理的监听内容有重复,开发中我用的最多的是监听键盘的一些通知 , 以此来做一些视图的平移来躲避键盘的遮挡: <br><br>弹出的键盘是隶属于另一个Window的一系列视图, 这些通知的接口都暴露在UIWIndow类中 <br><br>这些通知分两类:</p>
+
+<ul><li>keyboard整体开始出现隐藏的通知 , 看名字很容易懂 <br><br>UIKeyboardWillShowNotification <br><br>UIKeyboardDidShowNotification  <br><br>UIKeyboardWillHideNotification  <br><br>UIKeyboardDidHideNotification</li><br><li>指示keyboard的frame改变的一些时机的通知 <br><br>UIKeyboardWillChangeFrameNotification  <br><br>UIKeyboardDidChangeFrameNotification </li><br></ul>
+
+<p></p><p>最常用的就是UIKeyboardDidChangeFrameNotification , 可以在这个通知的回调方法里做视图的平移, 因为无论键盘是弹出还是隐藏, 最后都会调用UIKeyboardDidChangeFrameNotification通知的回调方法 <br><br>我们可以在这个通知的回调方法中 , 在notification对象的userInfo属性里,用UIKeyboardFrameEndUserInfoKey取出keyboard的最终Y值用来做视图平移.</p></div><div id="wmd-preview-section-footnotes" class="preview-content"></div><p></p>
+
+    </div>
+    <footer>
+        
+        
+		<div class="bdsharebuttonbox">
+	<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+	<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+	<a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a>
+	<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="bds_more" data-cmd="more"></a>
+	<a href="#" class="bds_count" data-cmd="count"></a>
+</div>
+<script>
+window._bd_share_config=
+{
+	"common":{
+		"bdSnsKey":{},
+		"bdText":"",
+		"bdMini":"2",
+		"bdMiniList":false,
+		"bdPic":"",
+		"bdStyle":"0",
+		"bdSize":"24"
+	},
+	"share":{},
+	"image":{
+		"viewList":["qzone","tsina","tqq","renren","weixin","fbook","twi"],
+		"viewText":"分享到：",
+		"viewSize":"24"
+	},
+	"selectShare":{
+		"bdContainerClass":null,
+		"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin","fbook","twi"]
+	}
+};
+with(document)0[
+	(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)
+];
+</script>    
+        <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+ <nav id="pagination" >
+    
+    
+    <a href="/2016/07/04/UItextField1/" class="alignright next" title=""></a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+
+
+	
+	<section id="comment">
+		<!-- 多说评论框 start -->
+		<div class="ds-thread" data-thread-key="2016/07/04/UItextField2/" data-title="" data-url="www.yoursite.com/2016/07/04/UItextField2/"></div>
+		<!-- 多说评论框 end -->
+		<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+		<script type="text/javascript">
+		var duoshuoQuery = {short_name:""};
+		(function() {
+			var ds = document.createElement('script');
+			ds.type = 'text/javascript';ds.async = true;
+			ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+			ds.charset = 'UTF-8';
+			(document.getElementsByTagName('head')[0] 
+			 || document.getElementsByTagName('body')[0]).appendChild(ds);
+		})();
+		</script>
+		<!-- 多说公共JS代码 end -->
+	</section>
+	
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:www.yoursite.com">
+  </form>
+</div>
+
+  
+
+  
+
+  <iframe width="100%" height="140" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=2&ptype=1&speed=0&skin=1&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=1923610190&verifier=6af5ad6a&colors=fafafa,fafafa,666666,0082cb,ecfbfd&dpc=1"></iframe>
+
+  <div class="widget tag">
+<h3 class="title">友情链接</h3>
+<ul class="entry">
+<li><a href="http://opiece.me" title="Chillax's Blog" target="_blank">Chillax</a></li>
+</ul>
+</div>
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer"><div id="footer" >
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/huangjunhui/concise" target="_blank" title="Concise">Concise</a> © 2013 
+		
+		<a href="www.yoursite.com/about" target="_blank" title="李天昊">李天昊</a>
+		
+		</p>
+</div>
+</footer>
+  <script src="//libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/counter.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+<div id="totop" style="position:fixed;bottom:100px;right:10px;cursor: pointer;">
+<a title="返回顶部"><img src="/imgs/scrollup.png"/></a>
+</div>
+<script src="/js/totop.js"></script>
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+</body>
+</html>
+
+
