@@ -15,7 +15,7 @@
 	})();
 	</script>
   
-  <title>正则表达式 | 白驹过隙 点滴于心</title>
+  <title>THAutoLoadSubViewEx框架简介 | 白驹过隙 点滴于心</title>
   <meta name="author" content="李天昊">
   
   <meta name="description" content="李天昊的技术博">
@@ -23,7 +23,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="正则表达式"/>
+  <meta property="og:title" content="THAutoLoadSubViewEx框架简介"/>
   <meta property="og:site_name" content="白驹过隙 点滴于心"/>
 
   
@@ -79,36 +79,24 @@
   <div class="post-content">
     <header class="article-info clearfix">
   <h1 itemprop="name">
-	正则表达式
+	THAutoLoadSubViewEx框架简介
   </h1>
   <p class="article-author">By
     
       <a href="www.yoursite.com" title="李天昊">李天昊</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-09-20T14:30:45.000Z" itemprop="datePublished">2014-09-20</time>
-    Update date:<time datetime="2016-07-04T14:01:12.000Z" itemprop="dateModified">2016-07-04</time>
+    <time datetime="2015-12-20T12:20:10.000Z" itemprop="datePublished">2015-12-20</time>
+    Update date:<time datetime="2016-07-07T05:31:13.000Z" itemprop="dateModified">2016-07-07</time>
     
   </p>
 </header>
     <div class="entry">
 		
-        <p>正则表达式</p>
-<p>匹配中文字符的正则表达式： [\u4e00-\u9fa5]<br>评注：匹配中文还真是个头疼的事，有了这个表达式就好办了</p>
-<p>匹配双字节字符(包括汉字在内)：[^\x00-\xff]<br>评注：可以用来计算字符串的长度（一个双字节字符长度计2，ASCII字符计1）</p>
-<p>匹配空白行的正则表达式：\n\s*\r<br>评注：可以用来删除空白行</p>
-<p>匹配HTML标记的正则表达式：&lt;(\S<em>?)[^&gt;]</em>&gt;.<em>?&lt;/\1&gt;|&lt;.</em>? /&gt;<br>评注：网上流传的版本太糟糕，上面这个也仅仅能匹配部分，对于复杂的嵌套标记依旧没有能力为力</p>
-<p>匹配首尾空白字符的正则表达式：^\s<em>|\s</em>$<br>评注：可以用来删除行首行尾的空白字符(包括空格、制表符、换页符等等)，非常有用的表达式</p>
-<p>匹配Email地址的正则表达式：\w+([-+.]\w+)<em>@\w+([-.]\w+)</em>.\w+([-.]\w+)*<br>评注：表单验证时很实用</p>
-<p>匹配网址URL的正则表达式：[a-zA-z]+://[^\s]*<br>评注：网上流传的版本功能很有限，上面这个基本可以满足需求</p>
-<p>匹配帐号是否合法(字母开头，允许5-16字节，允许字母数字下划线)：^[a-zA-Z][a-zA-Z0-9_]{4,15}$<br>评注：表单验证时很实用</p>
-<p>匹配国内电话号码：\d{3}-\d{8}|\d{4}-\d{7}<br>评注：匹配形式如 0511-4405222 或 021-87888822</p>
-<p>匹配腾讯QQ号：[1-9][0-9]{4,}<br>评注：腾讯QQ号从10000开始</p>
-<p>匹配中国邮政编码：[1-9]\d{5}(?!\d)<br>评注：中国邮政编码为6位数字</p>
-<p>匹配身份证：\d{15}|\d{18}<br>评注：中国的身份证为15位或18位</p>
-<p>匹配ip地址：\d+.\d+.\d+.\d+<br>评注：提取ip地址时有用</p>
-<p>匹配特定数字：<br>^[1-9]\d<em>$　 　 //匹配正整数<br>^-[1-9]\d</em>$ 　 //匹配负整数<br>^-?[1-9]\d<em>$　　 //匹配整数<br>^[1-9]\d</em>|0$　 //匹配非负整数（正整数 + 0）<br>^-[1-9]\d<em>|0$　　 //匹配非正整数（负整数 + 0）<br>^[1-9]\d</em>.\d<em>|0.\d</em>[1-9]\d<em>$　　 //匹配正浮点数<br>^-([1-9]\d</em>.\d<em>|0.\d</em>[1-9]\d<em>)$　 //匹配负浮点数<br>^-?([1-9]\d</em>.\d<em>|0.\d</em>[1-9]\d<em>|0?.0+|0)$　 //匹配浮点数<br>^[1-9]\d</em>.\d<em>|0.\d</em>[1-9]\d<em>|0?.0+|0$　　 //匹配非负浮点数（正浮点数 + 0）<br>^(-([1-9]\d</em>.\d<em>|0.\d</em>[1-9]\d*))|0?.0+|0$　　//匹配非正浮点数（负浮点数 + 0）<br>评注：处理大量数据时有用，具体应用时注意修正</p>
-<p>匹配特定字符串：<br>^[A-Za-z]+$　　//匹配由26个英文字母组成的字符串<br>^[A-Z]+$　　//匹配由26个英文字母的大写组成的字符串<br>^[a-z]+$　　//匹配由26个英文字母的小写组成的字符串<br>^[A-Za-z0-9]+$　　//匹配由数字和26个英文字母组成的字符串<br>^\w+$　　//匹配由数字、26个英文字母或者下划线组成的字符串 </p>
+        <p>#THAutoLoadSubViewEx</p>
+<p>##可以让UIView根据类名及变量名后缀自动加载子视图的分类 (免去了大型UIView要写大批量addsubview的烦恼)</p>
+<p>##使用方法:<br>将THAutoLoadSubViewEx文件夹导入自己的项目工程中, 为将要使用自动加载子视图的控件类名添加_auto后缀, 在该类中导入UIView+THEx.h头文件(如果是UITableViewCell及其子类,就导入UITableViewCell+THEx.h头文件),想要自动加载的实例变量命名以_auto结尾, 就能实现自动添加子视图了, 这些使用了自动添加子视图的控件要在分类里面提供的方法- (void)th_configIvars里面设置对应参数.<br>因为在我们自己重写的init方法中这些自动加载的实例变量还没有被初始化.</p>
+<p>##具体见示例Demo<br>以下是Demo中的自动添加示例代码 , 带_auto的实例变量被自动添加到了THDemoView_auto视图上 , 而没有带后缀的实例变量一直都是nil , 这些没有带后缀的变量仍需要我们手动在init方法中实例化 , 这和本分类中的实现方法不冲突 可以放心使用<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#import <span class="meta-string">"THDemoView_auto.h"</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">"UIView+THEx.h"</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">THDemoView_auto</span>  ()</span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>,<span class="keyword">weak</span>) <span class="built_in">UILabel</span> *labelOne_auto;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>,<span class="keyword">weak</span>) <span class="built_in">UILabel</span> *labelTwo;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>,<span class="keyword">weak</span>) <span class="built_in">UIButton</span>  *btn_auto;</div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>,<span class="keyword">weak</span>) <span class="built_in">UIButton</span> *btn;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">THDemoView_auto</span></span></div><div class="line"></div><div class="line"><span class="comment">// 若要使用autoLoadSubview功能 就要在这个方法中配置实例变量的数据  , 这个方法是在调用了initwithframe后, 将</span></div><div class="line"><span class="comment">//所有带_auto后缀的控件加入到当前视图后紧接着调用的 , 所以在这里面写实例变量的配置代码 跟在initwithframe</span></div><div class="line"><span class="comment">//里面写没区别 放心用</span></div><div class="line"></div><div class="line">-  (<span class="keyword">void</span>)th_configIvars</div><div class="line">&#123;</div><div class="line"><span class="keyword">self</span>.labelTwo.backgroundColor = <span class="keyword">self</span>.labelOne_auto.backgroundColor = <span class="keyword">self</span>.btn.backgroundColor = <span class="keyword">self</span>.btn_auto.backgroundColor = [<span class="built_in">UIColor</span> redColor];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)layoutSubviews</div><div class="line">&#123;</div><div class="line">[<span class="keyword">super</span> layoutSubviews];</div><div class="line"><span class="keyword">self</span>.labelOne_auto.frame = <span class="built_in">CGRectMake</span>(<span class="number">20</span>, <span class="number">100</span>, <span class="number">100</span>, <span class="number">30</span>);</div><div class="line"><span class="keyword">self</span>.labelTwo.frame = <span class="built_in">CGRectMake</span>(<span class="number">20</span>, <span class="number">200</span>, <span class="number">100</span>, <span class="number">30</span>);</div><div class="line"><span class="keyword">self</span>.btn_auto.frame = <span class="built_in">CGRectMake</span>(<span class="number">20</span>, <span class="number">300</span>, <span class="number">100</span>, <span class="number">30</span>);</div><div class="line"><span class="keyword">self</span>.btn.frame = <span class="built_in">CGRectMake</span>(<span class="number">20</span>, <span class="number">400</span>, <span class="number">100</span>, <span class="number">30</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure></p>
 
     </div>
     <footer>
@@ -116,7 +104,7 @@
         
   
   <div class="tags">
-    <a href="/tags/正则表达式/">正则表达式</a>
+    <a href="/tags/个人小项目/">个人小项目</a>
   </div>
 
 		<div class="bdsharebuttonbox">
@@ -164,10 +152,10 @@ with(document)0[
 
  <nav id="pagination" >
     
-    <a href="/2014/11/25/KVC/" class="alignleft prev" title="KVO随笔">KVO随笔</a>
+    <a href="/2016/01/15/THLinkageTable_MultiLevel/" class="alignleft prev" title="THLinkageTable_MultiLevel框架简介">THLinkageTable_MultiLevel框架简介</a>
     
     
-    <a href="/2014/08/20/runloop/" class="alignright next" title="贝塞尔曲线（UIBezierPath）属性、方法汇总">贝塞尔曲线（UIBezierPath）属性、方法汇总</a>
+    <a href="/2014/11/25/KVC/" class="alignright next" title="KVO随笔">KVO随笔</a>
     
     <div class="clearfix"></div>
 </nav>
@@ -177,7 +165,7 @@ with(document)0[
 	
 	<section id="comment">
 		<!-- 多说评论框 start -->
-		<div class="ds-thread" data-thread-key="2014/09/20/zhengzebiaodashi/" data-title="正则表达式" data-url="www.yoursite.com/2014/09/20/zhengzebiaodashi/"></div>
+		<div class="ds-thread" data-thread-key="2015/12/20/THAutoLoadSubViewEx/" data-title="THAutoLoadSubViewEx框架简介" data-url="www.yoursite.com/2015/12/20/THAutoLoadSubViewEx/"></div>
 		<!-- 多说评论框 end -->
 		<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 		<script type="text/javascript">

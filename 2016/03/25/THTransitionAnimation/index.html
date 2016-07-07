@@ -1,0 +1,279 @@
+
+
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script type="text/javascript" src="http://tajs.qq.com/stats?sId=44218032" charset="UTF-8"></script>
+  <script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?7192fa361f5cabb11d8a22de41c1ba8f";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+  
+  <title>THTransitionAnimation框架简介 | 白驹过隙 点滴于心</title>
+  <meta name="author" content="李天昊">
+  
+  <meta name="description" content="李天昊的技术博">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="THTransitionAnimation框架简介"/>
+  <meta property="og:site_name" content="白驹过隙 点滴于心"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/imgs/favicon.ico" rel="icon" type="image/x-ico">
+  <link rel="alternate" href="/atom.xml" title="白驹过隙 点滴于心" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//libs.baidu.com/jquery/1.8.0/jquery.min.js"></script>
+</head>
+
+
+<body>
+  <header><div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/imgs/logo.png" alt="白驹过隙 点滴于心" title="白驹过隙 点滴于心"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name">白驹过隙 点滴于心</h1>
+				<h2 class="blog-motto">Talk is cheap. Show me the code!</h2>
+			</div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+					<li> <a href="/atom.xml">RSS</a> </li>
+				</ul>
+			</nav>			
+</div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header class="article-info clearfix">
+  <h1 itemprop="name">
+	THTransitionAnimation框架简介
+  </h1>
+  <p class="article-author">By
+    
+      <a href="www.yoursite.com" title="李天昊">李天昊</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2016-03-25T14:05:13.000Z" itemprop="datePublished">2016-03-25</time>
+    Update date:<time datetime="2016-07-07T05:33:51.000Z" itemprop="dateModified">2016-07-07</time>
+    
+  </p>
+</header>
+    <div class="entry">
+		
+        <p>#THTransitionAnimation</p>
+<p>###封装自定义push pop 转场动画代理 支持百分比手势代理</p>
+<p>使用方法:</p>
+<ul>
+<li>引入UINavigationController+THTransitionSupportExtension.h头文件,若要使用手势转场,还需要引入THInteractiveTransition.h头文件</li>
+<li><p>调用方法如下, 也可以直接看Demo中的ViewController.m文件</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//  push动画调用</span></div><div class="line">- (<span class="keyword">IBAction</span>)pushClk:(<span class="keyword">id</span>)sender</div><div class="line">&#123;</div><div class="line">ViewController *vc = [[<span class="built_in">UIStoryboard</span> storyboardWithName:<span class="string">@"Main"</span> bundle:<span class="literal">nil</span>] instantiateViewControllerWithIdentifier:<span class="string">@"ViewController"</span>];</div><div class="line"><span class="comment">// 转场动画调用 就这一句话 通过transitionAnimationStyle枚举值传入动画类型</span></div><div class="line">[<span class="keyword">self</span>.navigationController th_pushViewController:vc preAnimationStyle:transitionAnimationStyle duration:<span class="number">0.6</span> completion:^&#123;</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"push 转场执行完毕"</span>);</div><div class="line">&#125;];</div><div class="line">&#125;</div><div class="line"><span class="comment">// pop动画调用</span></div><div class="line">- (<span class="keyword">IBAction</span>)popClk:(<span class="keyword">id</span>)sender</div><div class="line">&#123;</div><div class="line"></div><div class="line">[<span class="keyword">self</span>.navigationController th_popViewControllerPreAnimationStyle:transitionAnimationStyle duration:<span class="number">0.6</span> completion:^&#123;</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"pop 转场执行完毕"</span>);</div><div class="line">&#125;];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 手势转场使用方法</span></div><div class="line">- (<span class="keyword">void</span>)settingInteractiveTransitionDelegate</div><div class="line">&#123;</div><div class="line">_interactiveTransition = [[THInteractiveTransition alloc] init];</div><div class="line"><span class="comment">//绑定手势方向是对应push 还是pop</span></div><div class="line">[_interactiveTransition bindingTransitionType:THInteractiveTransitionTypePop  withGestureDirection:THInteractiveTransitionGestureDirectionRight];</div><div class="line">[_interactiveTransition bindingTransitionType:THInteractiveTransitionTypePush  withGestureDirection:THInteractiveTransitionGestureDirectionLeft];</div><div class="line"></div><div class="line">__<span class="keyword">weak</span> <span class="keyword">typeof</span>(<span class="keyword">self</span>) weakSelf = <span class="keyword">self</span> ;</div><div class="line"><span class="comment">//设置手势转场的转场动画样式</span></div><div class="line">_interactiveTransition.popStyle = transitionAnimationStyle ;</div><div class="line"><span class="comment">//push 到那个控制器 push之前要做些什么其他操作 都写在这里</span></div><div class="line">[_interactiveTransition setPushConifg:^&#123;</div><div class="line">__<span class="keyword">strong</span> <span class="keyword">typeof</span>(weakSelf) strongSelf = weakSelf ;</div><div class="line">ViewController *vc = [[<span class="built_in">UIStoryboard</span> storyboardWithName:<span class="string">@"Main"</span> bundle:<span class="literal">nil</span>] instantiateViewControllerWithIdentifier:<span class="string">@"ViewController"</span>];</div><div class="line"><span class="keyword">if</span> (transitionAnimationStyle == THTransitionPreAnimationStyleLeafPage) &#123;</div><div class="line">[strongSelf.navigationController th_pushViewController:vc preAnimationStyle:THTransitionPreAnimationStylePage duration:<span class="number">0.3</span> completion:^&#123;</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@" 目前自定义翻页效果的push动画的手势转场有时序bug , 所以禁用"</span>);</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"push 转场执行完毕"</span>);</div><div class="line">&#125;];</div><div class="line">&#125;<span class="keyword">else</span></div><div class="line">&#123;</div><div class="line">[strongSelf.navigationController th_pushViewController:vc preAnimationStyle:transitionAnimationStyle duration:<span class="number">0.3</span> completion:^&#123;</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"push 转场执行完毕"</span>);</div><div class="line">&#125;];</div><div class="line">&#125;</div><div class="line">&#125;];</div><div class="line"><span class="comment">// 将当前控制器绑定到专场代理中 是个弱引用 放心绑 ...</span></div><div class="line">[_interactiveTransition addPanGestureForViewController:<span class="keyword">self</span>];</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>通过传入THTransitionPreAnimationStyle(动画样式枚举值)确定转场动画效果</p>
+</li>
+<li>目前实现的THTransitionPreAnimationStyle效果有:       </li>
+<li>[THTransitionPreAnimationStylePage]  =  @”page(翻页)”,</li>
+<li>[THTransitionPreAnimationStyleRippluEffect] =  @”tipplu(水波)”,</li>
+<li>[THTransitionPreAnimationStyleSuckEffect] =  @”suck(吸收)”,</li>
+<li>[THTransitionPreAnimationStyleCube] =  @”cube(立方体)”,</li>
+<li>[THTransitionPreAnimationStyleOglFlip]  =  @”oglFlip(翻转)”,</li>
+<li>[THTransitionPreAnimationStyleFade]  =  @”fade(渐变)”,</li>
+<li>[THTransitionPreAnimationStyleMoveIn]  =  @”moveIn(移入)”,</li>
+<li>[THTransitionPreAnimationStylePush]  =  @”push(推入)”,</li>
+<li>[THTransitionPreAnimationStyleReveal]  = @”reveal(揭示)”,</li>
+<li>[THTransitionPreAnimationStyleWaterWaveUp] = @”waterWaveUp(波浪上移)”,</li>
+<li>[THTransitionPreAnimationStyleLeafPage]  = @”leafPage(横向翻页)”,</li>
+<li>[THTransitionPreAnimationStyleExplode ] = @”explode(爆裂)”,</li>
+</ul>
+
+    </div>
+    <footer>
+        
+        
+  
+  <div class="tags">
+    <a href="/tags/个人小项目/">个人小项目</a>
+  </div>
+
+		<div class="bdsharebuttonbox">
+	<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+	<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+	<a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a>
+	<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="bds_more" data-cmd="more"></a>
+	<a href="#" class="bds_count" data-cmd="count"></a>
+</div>
+<script>
+window._bd_share_config=
+{
+	"common":{
+		"bdSnsKey":{},
+		"bdText":"",
+		"bdMini":"2",
+		"bdMiniList":false,
+		"bdPic":"",
+		"bdStyle":"0",
+		"bdSize":"24"
+	},
+	"share":{},
+	"image":{
+		"viewList":["qzone","tsina","tqq","renren","weixin","fbook","twi"],
+		"viewText":"分享到：",
+		"viewSize":"24"
+	},
+	"selectShare":{
+		"bdContainerClass":null,
+		"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin","fbook","twi"]
+	}
+};
+with(document)0[
+	(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)
+];
+</script>    
+        <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+ <nav id="pagination" >
+    
+    <a href="/2016/05/25/THMediaPlayeCacher/" class="alignleft prev" title="THMediaPlayeCacher框架简介">THMediaPlayeCacher框架简介</a>
+    
+    
+    <a href="/2016/01/15/THLinkageTable_MultiLevel/" class="alignright next" title="THLinkageTable_MultiLevel框架简介">THLinkageTable_MultiLevel框架简介</a>
+    
+    <div class="clearfix"></div>
+</nav>
+
+
+
+	
+	<section id="comment">
+		<!-- 多说评论框 start -->
+		<div class="ds-thread" data-thread-key="2016/03/25/THTransitionAnimation/" data-title="THTransitionAnimation框架简介" data-url="www.yoursite.com/2016/03/25/THTransitionAnimation/"></div>
+		<!-- 多说评论框 end -->
+		<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+		<script type="text/javascript">
+		var duoshuoQuery = {short_name:""};
+		(function() {
+			var ds = document.createElement('script');
+			ds.type = 'text/javascript';ds.async = true;
+			ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+			ds.charset = 'UTF-8';
+			(document.getElementsByTagName('head')[0] 
+			 || document.getElementsByTagName('body')[0]).appendChild(ds);
+		})();
+		</script>
+		<!-- 多说公共JS代码 end -->
+	</section>
+	
+</div></div>
+    <aside id="sidebar" class="alignright">
+  
+<div class="widget tagcloud">
+  <h3 class="title">Tag Cloud</h3>
+  <div class="entry">
+    <a href="/tags/KVO/" style="font-size: 10px;">KVO</a> <a href="/tags/UIBezierPath/" style="font-size: 10px;">UIBezierPath</a> <a href="/tags/UITextField/" style="font-size: 15px;">UITextField</a> <a href="/tags/runloop/" style="font-size: 10px;">runloop</a> <a href="/tags/个人小项目/" style="font-size: 20px;">个人小项目</a> <a href="/tags/文件操作/" style="font-size: 10px;">文件操作</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a>
+  </div>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer"><div id="footer" >
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/huangjunhui/concise" target="_blank" title="Concise">Concise</a> © 2013 
+		
+		<a href="www.yoursite.com/about" target="_blank" title="李天昊">李天昊</a>
+		
+		</p>
+</div>
+</footer>
+  <script src="//libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/counter.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+<div id="totop" style="position:fixed;bottom:100px;right:10px;cursor: pointer;">
+<a title="返回顶部"><img src="/imgs/scrollup.png"/></a>
+</div>
+<script src="/js/totop.js"></script>
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+</body>
+</html>
+
+

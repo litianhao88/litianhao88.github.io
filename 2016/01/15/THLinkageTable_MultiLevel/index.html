@@ -15,7 +15,7 @@
 	})();
 	</script>
   
-  <title>正则表达式 | 白驹过隙 点滴于心</title>
+  <title>THLinkageTable_MultiLevel框架简介 | 白驹过隙 点滴于心</title>
   <meta name="author" content="李天昊">
   
   <meta name="description" content="李天昊的技术博">
@@ -23,7 +23,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="正则表达式"/>
+  <meta property="og:title" content="THLinkageTable_MultiLevel框架简介"/>
   <meta property="og:site_name" content="白驹过隙 点滴于心"/>
 
   
@@ -79,36 +79,40 @@
   <div class="post-content">
     <header class="article-info clearfix">
   <h1 itemprop="name">
-	正则表达式
+	THLinkageTable_MultiLevel框架简介
   </h1>
   <p class="article-author">By
     
       <a href="www.yoursite.com" title="李天昊">李天昊</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-09-20T14:30:45.000Z" itemprop="datePublished">2014-09-20</time>
-    Update date:<time datetime="2016-07-04T14:01:12.000Z" itemprop="dateModified">2016-07-04</time>
+    <time datetime="2016-01-15T14:35:10.000Z" itemprop="datePublished">2016-01-15</time>
+    Update date:<time datetime="2016-07-07T05:32:03.000Z" itemprop="dateModified">2016-07-07</time>
     
   </p>
 </header>
     <div class="entry">
 		
-        <p>正则表达式</p>
-<p>匹配中文字符的正则表达式： [\u4e00-\u9fa5]<br>评注：匹配中文还真是个头疼的事，有了这个表达式就好办了</p>
-<p>匹配双字节字符(包括汉字在内)：[^\x00-\xff]<br>评注：可以用来计算字符串的长度（一个双字节字符长度计2，ASCII字符计1）</p>
-<p>匹配空白行的正则表达式：\n\s*\r<br>评注：可以用来删除空白行</p>
-<p>匹配HTML标记的正则表达式：&lt;(\S<em>?)[^&gt;]</em>&gt;.<em>?&lt;/\1&gt;|&lt;.</em>? /&gt;<br>评注：网上流传的版本太糟糕，上面这个也仅仅能匹配部分，对于复杂的嵌套标记依旧没有能力为力</p>
-<p>匹配首尾空白字符的正则表达式：^\s<em>|\s</em>$<br>评注：可以用来删除行首行尾的空白字符(包括空格、制表符、换页符等等)，非常有用的表达式</p>
-<p>匹配Email地址的正则表达式：\w+([-+.]\w+)<em>@\w+([-.]\w+)</em>.\w+([-.]\w+)*<br>评注：表单验证时很实用</p>
-<p>匹配网址URL的正则表达式：[a-zA-z]+://[^\s]*<br>评注：网上流传的版本功能很有限，上面这个基本可以满足需求</p>
-<p>匹配帐号是否合法(字母开头，允许5-16字节，允许字母数字下划线)：^[a-zA-Z][a-zA-Z0-9_]{4,15}$<br>评注：表单验证时很实用</p>
-<p>匹配国内电话号码：\d{3}-\d{8}|\d{4}-\d{7}<br>评注：匹配形式如 0511-4405222 或 021-87888822</p>
-<p>匹配腾讯QQ号：[1-9][0-9]{4,}<br>评注：腾讯QQ号从10000开始</p>
-<p>匹配中国邮政编码：[1-9]\d{5}(?!\d)<br>评注：中国邮政编码为6位数字</p>
-<p>匹配身份证：\d{15}|\d{18}<br>评注：中国的身份证为15位或18位</p>
-<p>匹配ip地址：\d+.\d+.\d+.\d+<br>评注：提取ip地址时有用</p>
-<p>匹配特定数字：<br>^[1-9]\d<em>$　 　 //匹配正整数<br>^-[1-9]\d</em>$ 　 //匹配负整数<br>^-?[1-9]\d<em>$　　 //匹配整数<br>^[1-9]\d</em>|0$　 //匹配非负整数（正整数 + 0）<br>^-[1-9]\d<em>|0$　　 //匹配非正整数（负整数 + 0）<br>^[1-9]\d</em>.\d<em>|0.\d</em>[1-9]\d<em>$　　 //匹配正浮点数<br>^-([1-9]\d</em>.\d<em>|0.\d</em>[1-9]\d<em>)$　 //匹配负浮点数<br>^-?([1-9]\d</em>.\d<em>|0.\d</em>[1-9]\d<em>|0?.0+|0)$　 //匹配浮点数<br>^[1-9]\d</em>.\d<em>|0.\d</em>[1-9]\d<em>|0?.0+|0$　　 //匹配非负浮点数（正浮点数 + 0）<br>^(-([1-9]\d</em>.\d<em>|0.\d</em>[1-9]\d*))|0?.0+|0$　　//匹配非正浮点数（负浮点数 + 0）<br>评注：处理大量数据时有用，具体应用时注意修正</p>
-<p>匹配特定字符串：<br>^[A-Za-z]+$　　//匹配由26个英文字母组成的字符串<br>^[A-Z]+$　　//匹配由26个英文字母的大写组成的字符串<br>^[a-z]+$　　//匹配由26个英文字母的小写组成的字符串<br>^[A-Za-z0-9]+$　　//匹配由数字和26个英文字母组成的字符串<br>^\w+$　　//匹配由数字、26个英文字母或者下划线组成的字符串 </p>
+        <p>#THLinkageTable_MultiLevel</p>
+<p>##多级联动选择省市表视图,实现了一个可以按照树形层级关系无限向下读取信息的model,并可以向UIView那样按照继承链从下向上或从上向下查找节点</p>
+<p>##多级模型的组织结构</p>
+<p>####THAddressViewModel </p>
+<ul>
+<li>负责从plist文件中加载并解析出address模型,并构建树形数据结构(其中节点填充的都是THAddressModel)</li>
+<li>维护一个记载了所有被选择省市模型的数组<br>####THAddressModel</li>
+<li>记载省市名称及以及用户拼音简写搜索的拼音简写名称</li>
+<li>提供一个标记当前模型是否被选择标识位</li>
+<li>具有指向父模型的指针以及维护一个保存子模型的数组</li>
+<li>提供两个实例方法,分别可以从本节点向上或向下遍历,并提供一个block传入接口,让外界可以在遍历过程中对每个符合条件的节点进行操作</li>
+</ul>
+<p>##显示模块</p>
+<p>####显示模块用tableview来做, 实现多级下拉效果,具体思路就是非叶子节点用sectionHeaderView展示,点击sectionHeaderView取出本section的子节点数据, 用一个新的tableview加载子节点数组,叶子节点的model用cell展示</p>
+<p>##只要按照address.plist文件的的层级格式命名 , 可以无限写下去, THAddressViewModel会自动加载并建立准确的对应的树形层级结构供tableview展示</p>
+<p>##具体使用方法<br>在控制器中引入两个头文件<br>import “THAddressViewModel.h”<br>import “THLinkageTableBasicView.h”</p>
+<p>添加THLinkageTableBasicView为子视图<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)addAddressTab</div><div class="line">&#123;</div><div class="line">THLinkageTableBasicView *addressTab = [[THLinkageTableBasicView alloc] initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">64</span>, <span class="keyword">self</span>.view.bounds.size.width, <span class="keyword">self</span>.view.bounds.size.height - <span class="number">64</span> )];</div><div class="line">[addressTab changeModel:<span class="literal">YES</span>];</div><div class="line">addressTab.shouldShowSearchBar = <span class="literal">YES</span> ;</div><div class="line">_addressTab = addressTab ;</div><div class="line"></div><div class="line">[<span class="keyword">self</span>.view addSubview:addressTab];</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在address.plist文件中按原来格式及key值填写自己想要展示的信息</p>
+<p>注册一个改变选择模型的通知 , 可以在这个通知回调中做刷新UI的操作<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">__<span class="keyword">weak</span> <span class="keyword">typeof</span>(<span class="keyword">self</span>) weakSelf = <span class="keyword">self</span> ;</div><div class="line">_observer = [[<span class="built_in">NSNotificationCenter</span> defaultCenter] addObserverForName:<span class="string">@"changeText"</span> object:<span class="literal">nil</span> queue:[<span class="built_in">NSOperationQueue</span> mainQueue] usingBlock:^(<span class="built_in">NSNotification</span> * _Nonnull note) &#123;</div><div class="line">weakSelf.titleLbl.text = note.object ;</div><div class="line">&#125;];</div></pre></td></tr></table></figure></p>
+<p>本项目还只是一个demo 没有做完善的封装, 接口不友好, 需改善的地方较多,只做技术交流使用</p>
 
     </div>
     <footer>
@@ -116,7 +120,7 @@
         
   
   <div class="tags">
-    <a href="/tags/正则表达式/">正则表达式</a>
+    <a href="/tags/个人小项目/">个人小项目</a>
   </div>
 
 		<div class="bdsharebuttonbox">
@@ -164,10 +168,10 @@ with(document)0[
 
  <nav id="pagination" >
     
-    <a href="/2014/11/25/KVC/" class="alignleft prev" title="KVO随笔">KVO随笔</a>
+    <a href="/2016/03/25/THTransitionAnimation/" class="alignleft prev" title="THTransitionAnimation框架简介">THTransitionAnimation框架简介</a>
     
     
-    <a href="/2014/08/20/runloop/" class="alignright next" title="贝塞尔曲线（UIBezierPath）属性、方法汇总">贝塞尔曲线（UIBezierPath）属性、方法汇总</a>
+    <a href="/2015/12/20/THAutoLoadSubViewEx/" class="alignright next" title="THAutoLoadSubViewEx框架简介">THAutoLoadSubViewEx框架简介</a>
     
     <div class="clearfix"></div>
 </nav>
@@ -177,7 +181,7 @@ with(document)0[
 	
 	<section id="comment">
 		<!-- 多说评论框 start -->
-		<div class="ds-thread" data-thread-key="2014/09/20/zhengzebiaodashi/" data-title="正则表达式" data-url="www.yoursite.com/2014/09/20/zhengzebiaodashi/"></div>
+		<div class="ds-thread" data-thread-key="2016/01/15/THLinkageTable_MultiLevel/" data-title="THLinkageTable_MultiLevel框架简介" data-url="www.yoursite.com/2016/01/15/THLinkageTable_MultiLevel/"></div>
 		<!-- 多说评论框 end -->
 		<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 		<script type="text/javascript">

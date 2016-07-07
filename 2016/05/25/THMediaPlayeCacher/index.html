@@ -15,7 +15,7 @@
 	})();
 	</script>
   
-  <title>正则表达式 | 白驹过隙 点滴于心</title>
+  <title>THMediaPlayeCacher框架简介 | 白驹过隙 点滴于心</title>
   <meta name="author" content="李天昊">
   
   <meta name="description" content="李天昊的技术博">
@@ -23,7 +23,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="正则表达式"/>
+  <meta property="og:title" content="THMediaPlayeCacher框架简介"/>
   <meta property="og:site_name" content="白驹过隙 点滴于心"/>
 
   
@@ -79,36 +79,44 @@
   <div class="post-content">
     <header class="article-info clearfix">
   <h1 itemprop="name">
-	正则表达式
+	THMediaPlayeCacher框架简介
   </h1>
   <p class="article-author">By
     
       <a href="www.yoursite.com" title="李天昊">李天昊</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-09-20T14:30:45.000Z" itemprop="datePublished">2014-09-20</time>
-    Update date:<time datetime="2016-07-04T14:01:12.000Z" itemprop="dateModified">2016-07-04</time>
+    <time datetime="2016-05-25T12:15:15.000Z" itemprop="datePublished">2016-05-25</time>
+    Update date:<time datetime="2016-07-07T05:33:49.000Z" itemprop="dateModified">2016-07-07</time>
     
   </p>
 </header>
     <div class="entry">
 		
-        <p>正则表达式</p>
-<p>匹配中文字符的正则表达式： [\u4e00-\u9fa5]<br>评注：匹配中文还真是个头疼的事，有了这个表达式就好办了</p>
-<p>匹配双字节字符(包括汉字在内)：[^\x00-\xff]<br>评注：可以用来计算字符串的长度（一个双字节字符长度计2，ASCII字符计1）</p>
-<p>匹配空白行的正则表达式：\n\s*\r<br>评注：可以用来删除空白行</p>
-<p>匹配HTML标记的正则表达式：&lt;(\S<em>?)[^&gt;]</em>&gt;.<em>?&lt;/\1&gt;|&lt;.</em>? /&gt;<br>评注：网上流传的版本太糟糕，上面这个也仅仅能匹配部分，对于复杂的嵌套标记依旧没有能力为力</p>
-<p>匹配首尾空白字符的正则表达式：^\s<em>|\s</em>$<br>评注：可以用来删除行首行尾的空白字符(包括空格、制表符、换页符等等)，非常有用的表达式</p>
-<p>匹配Email地址的正则表达式：\w+([-+.]\w+)<em>@\w+([-.]\w+)</em>.\w+([-.]\w+)*<br>评注：表单验证时很实用</p>
-<p>匹配网址URL的正则表达式：[a-zA-z]+://[^\s]*<br>评注：网上流传的版本功能很有限，上面这个基本可以满足需求</p>
-<p>匹配帐号是否合法(字母开头，允许5-16字节，允许字母数字下划线)：^[a-zA-Z][a-zA-Z0-9_]{4,15}$<br>评注：表单验证时很实用</p>
-<p>匹配国内电话号码：\d{3}-\d{8}|\d{4}-\d{7}<br>评注：匹配形式如 0511-4405222 或 021-87888822</p>
-<p>匹配腾讯QQ号：[1-9][0-9]{4,}<br>评注：腾讯QQ号从10000开始</p>
-<p>匹配中国邮政编码：[1-9]\d{5}(?!\d)<br>评注：中国邮政编码为6位数字</p>
-<p>匹配身份证：\d{15}|\d{18}<br>评注：中国的身份证为15位或18位</p>
-<p>匹配ip地址：\d+.\d+.\d+.\d+<br>评注：提取ip地址时有用</p>
-<p>匹配特定数字：<br>^[1-9]\d<em>$　 　 //匹配正整数<br>^-[1-9]\d</em>$ 　 //匹配负整数<br>^-?[1-9]\d<em>$　　 //匹配整数<br>^[1-9]\d</em>|0$　 //匹配非负整数（正整数 + 0）<br>^-[1-9]\d<em>|0$　　 //匹配非正整数（负整数 + 0）<br>^[1-9]\d</em>.\d<em>|0.\d</em>[1-9]\d<em>$　　 //匹配正浮点数<br>^-([1-9]\d</em>.\d<em>|0.\d</em>[1-9]\d<em>)$　 //匹配负浮点数<br>^-?([1-9]\d</em>.\d<em>|0.\d</em>[1-9]\d<em>|0?.0+|0)$　 //匹配浮点数<br>^[1-9]\d</em>.\d<em>|0.\d</em>[1-9]\d<em>|0?.0+|0$　　 //匹配非负浮点数（正浮点数 + 0）<br>^(-([1-9]\d</em>.\d<em>|0.\d</em>[1-9]\d*))|0?.0+|0$　　//匹配非正浮点数（负浮点数 + 0）<br>评注：处理大量数据时有用，具体应用时注意修正</p>
-<p>匹配特定字符串：<br>^[A-Za-z]+$　　//匹配由26个英文字母组成的字符串<br>^[A-Z]+$　　//匹配由26个英文字母的大写组成的字符串<br>^[a-z]+$　　//匹配由26个英文字母的小写组成的字符串<br>^[A-Za-z0-9]+$　　//匹配由数字和26个英文字母组成的字符串<br>^\w+$　　//匹配由数字、26个英文字母或者下划线组成的字符串 </p>
+        <p>#THMediaPlayeCacher</p>
+<p>#####核心功能在THMediaCachePalyer文件夹中 , 实现了对网络媒体资源进行边下边播,磁盘缓存网络媒体资源,亮点是可以缓存断点文件(一般主流视频分享app的做法是视频终端下载就不缓存了 , 而本框架可以缓存任意起始点任意长度的媒体文件), 播放音频或视频的碎片文件.</p>
+<p>#####同时实现了播放音乐时歌词Y轴滚动,同步X轴颜色填充功能 ,歌单轮播功能 , 及后台播放功能(由于笔者业余时间有限 , 这个功能并没有抽成单独的模块,具体实现在THLrcDisplayView类中,有兴趣的可以看下)</p>
+<p>###THMediaPlayeCacher结构</p>
+<p>####THMediaPlayer<br>对外接口类 , 使用本框架功能只要和这个类交互就够了 , 具体的调用方法都写在demo中一个叫THMusicPlayController的类中.</p>
+<p>#####需要给这个类传的参数:</p>
+<ul>
+<li>播放媒体文件的url</li>
+<li>播放音乐时的底部控制条的superView</li>
+<li>播放界面的superView(歌词 , 歌手图片 , 视频窗口需要展示在哪个view上 就是这个参数决定)</li>
+<li>设置一些底部控制条的按钮回调,都是block属性 ,可以通过这些block属性得到当前播放进度, 控制条上所有按钮及进度条拖动的事件信号</li>
+</ul>
+<p>####THMediaDataProvider<br>为THMediaPlayer提供媒体数据的类, 该类根据播放文件的url调用THMediaDataCacheManager类中的方法,得知本地有没有缓存文件, 有几段 , 是否完整, 如果是片段缓存,应该在哪一段用缓存播放, 哪一段加载网络资源 .</p>
+<p>####MediaDataNetDownloadTask<br>MediaDataNetDownloadTask是THMediaDataProvider持有的属性 ,  当THMediaDataProvider需要加载网络数据时,就用MediaDataNetDownloadTask开启下载任务 , MediaDataNetDownloadTask实时拼接下载到的数据并写入temp文件夹中的一个临时文件 , 并用代理方法通知THMediaDataProvider接收下载后的数据提供给THMediaPlayer播放,每次task完成时,将这个临时文件合并到缓存中url对应的文件夹中 , 这样可以做到断点数据的缓存 .</p>
+<p>####THCoreDataHelper<br>coreData操作工具类 , 本框架构建了一个coreData文件用来存储可用的缓存文件的索引值 , 创建日期 ,文件大小等在程序运行过程中必须的缓存文件参数, 这个类直接又下面的THMediaDataCacheManager调用</p>
+<p>####THMediaDataCacheManager<br>实现断点缓存的核心类 , 不同的媒体文件存在不同的文件夹下 , 文件夹用媒体文件的url的MD5摘要字符串命名 , 相同url下载下来的文件 有这个类合并到对应的文件夹下 , 如果两个断点文件之间有交集, 就由这个类负责将他们拼成一个文件, 并更新索引文件 . 这个类还提供基于urlKey值详细的查询方法 , 可以用url到内存中查找到可用的资源及资源的每段索引范围</p>
+<p>###THMediaPlayeCacher运行流程</p>
+<ul>
+<li>THMediaPlayer接收Url参数, 用THMediaDataCacheManager类去缓存中查找有没有可用的媒体文件 :</li>
+<li>如果有 ,并且是完成文件 , 那么就把url转为file:协议头的本地路径 , 直接播放本地文件 , 这时不会用到THMediaDataProvider和MediaDataNetDownloadTask.</li>
+<li>如果有 , 但是是片段文件 , 就把url的协议头替换成自定义的其他字符串, 这样AVplayer的urlAsset通过错误的url加载不到数据,就会调用THMediaDataProvider实现的代理方法 , 在这个代理方法中 , 可以通过THMediaDataCacheManager的类方法拿到所有缓存片段文件的range值(这个值表示可用的缓存文件在整个媒体文件中的起始偏移量和长度), 通过写range值,THMediaDataProvider就能知道哪一段数据该通过MediaDataNetDownloadTask去网络下载  ,哪一段数据直接加载本地文件进行播放 , (当然 其中还涉及到了文件类型信息的获取和拼接) ,这样就实现了不完整文件的播放.</li>
+<li>如果本地没有可用的缓存 , 那么直接让MediaDataNetDownloadTask开启一个下载任务去网络上下载 , 变下边存到沙盒中 , 并且在MediaDataNetDownloadTask的receive data代理方法中通知THMediaDataProvider去指定文件内读取数据提供给avplayer播放</li>
+</ul>
+<p>###该项目本身就是个使用THMediaPlayeCacher的Demo , 目前仍有几个不可忽视的bug存在 , 基于笔者时间有限 , 可能尚需不少事日方能完善.</p>
 
     </div>
     <footer>
@@ -116,7 +124,7 @@
         
   
   <div class="tags">
-    <a href="/tags/正则表达式/">正则表达式</a>
+    <a href="/tags/个人小项目/">个人小项目</a>
   </div>
 
 		<div class="bdsharebuttonbox">
@@ -164,10 +172,8 @@ with(document)0[
 
  <nav id="pagination" >
     
-    <a href="/2014/11/25/KVC/" class="alignleft prev" title="KVO随笔">KVO随笔</a>
     
-    
-    <a href="/2014/08/20/runloop/" class="alignright next" title="贝塞尔曲线（UIBezierPath）属性、方法汇总">贝塞尔曲线（UIBezierPath）属性、方法汇总</a>
+    <a href="/2016/03/25/THTransitionAnimation/" class="alignright next" title="THTransitionAnimation框架简介">THTransitionAnimation框架简介</a>
     
     <div class="clearfix"></div>
 </nav>
@@ -177,7 +183,7 @@ with(document)0[
 	
 	<section id="comment">
 		<!-- 多说评论框 start -->
-		<div class="ds-thread" data-thread-key="2014/09/20/zhengzebiaodashi/" data-title="正则表达式" data-url="www.yoursite.com/2014/09/20/zhengzebiaodashi/"></div>
+		<div class="ds-thread" data-thread-key="2016/05/25/THMediaPlayeCacher/" data-title="THMediaPlayeCacher框架简介" data-url="www.yoursite.com/2016/05/25/THMediaPlayeCacher/"></div>
 		<!-- 多说评论框 end -->
 		<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 		<script type="text/javascript">
