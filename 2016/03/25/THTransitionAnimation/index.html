@@ -87,36 +87,44 @@
     </p>
   <p class="article-time">
     <time datetime="2016-03-25T14:05:13.000Z" itemprop="datePublished">2016-03-25</time>
-    更新日期:<time datetime="2016-07-07T05:33:51.000Z" itemprop="dateModified">2016-07-07</time>
+    Update date:<time datetime="2016-07-07T06:01:20.000Z" itemprop="dateModified">2016-07-07</time>
     
   </p>
 </header>
     <div class="entry">
 		
-        <p>#THTransitionAnimation</p>
-<p>###封装自定义push pop 转场动画代理 支持百分比手势代理</p>
+        <p>&lt;!DOCTYPE html&gt;<html><head><title>THTransitionAnimation</title><meta charset="utf-8"><link href="https://dn-maxiang.qbox.me/res-min/themes/marxico.css" rel="stylesheet"><style></style></head><body><div id="preview-contents" class="note-content"></div></body></html></p>
+<p><div id="wmd-preview" class="preview-content"></div></p>
+<div id="wmd-preview-section-11648" class="wmd-preview-section preview-content">
+
+<p></p></div><div id="wmd-preview-section-11649" class="wmd-preview-section preview-content"><p></p>
+<h1 id="thtransitionanimation">THTransitionAnimation</h1>
+
+<p></p></div><div id="wmd-preview-section-11650" class="wmd-preview-section preview-content"><p></p>
+<h3 id="封装自定义push-pop-转场动画代理-只是百分比手势代理">封装自定义push pop 转场动画代理 只是百分比手势代理</h3>
+
 <p>使用方法:</p>
-<ul>
-<li>引入UINavigationController+THTransitionSupportExtension.h头文件,若要使用手势转场,还需要引入THInteractiveTransition.h头文件</li>
-<li><p>调用方法如下, 也可以直接看Demo中的ViewController.m文件</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//  push动画调用</span></div><div class="line">- (<span class="keyword">IBAction</span>)pushClk:(<span class="keyword">id</span>)sender</div><div class="line">&#123;</div><div class="line">ViewController *vc = [[<span class="built_in">UIStoryboard</span> storyboardWithName:<span class="string">@"Main"</span> bundle:<span class="literal">nil</span>] instantiateViewControllerWithIdentifier:<span class="string">@"ViewController"</span>];</div><div class="line"><span class="comment">// 转场动画调用 就这一句话 通过transitionAnimationStyle枚举值传入动画类型</span></div><div class="line">[<span class="keyword">self</span>.navigationController th_pushViewController:vc preAnimationStyle:transitionAnimationStyle duration:<span class="number">0.6</span> completion:^&#123;</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"push 转场执行完毕"</span>);</div><div class="line">&#125;];</div><div class="line">&#125;</div><div class="line"><span class="comment">// pop动画调用</span></div><div class="line">- (<span class="keyword">IBAction</span>)popClk:(<span class="keyword">id</span>)sender</div><div class="line">&#123;</div><div class="line"></div><div class="line">[<span class="keyword">self</span>.navigationController th_popViewControllerPreAnimationStyle:transitionAnimationStyle duration:<span class="number">0.6</span> completion:^&#123;</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"pop 转场执行完毕"</span>);</div><div class="line">&#125;];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 手势转场使用方法</span></div><div class="line">- (<span class="keyword">void</span>)settingInteractiveTransitionDelegate</div><div class="line">&#123;</div><div class="line">_interactiveTransition = [[THInteractiveTransition alloc] init];</div><div class="line"><span class="comment">//绑定手势方向是对应push 还是pop</span></div><div class="line">[_interactiveTransition bindingTransitionType:THInteractiveTransitionTypePop  withGestureDirection:THInteractiveTransitionGestureDirectionRight];</div><div class="line">[_interactiveTransition bindingTransitionType:THInteractiveTransitionTypePush  withGestureDirection:THInteractiveTransitionGestureDirectionLeft];</div><div class="line"></div><div class="line">__<span class="keyword">weak</span> <span class="keyword">typeof</span>(<span class="keyword">self</span>) weakSelf = <span class="keyword">self</span> ;</div><div class="line"><span class="comment">//设置手势转场的转场动画样式</span></div><div class="line">_interactiveTransition.popStyle = transitionAnimationStyle ;</div><div class="line"><span class="comment">//push 到那个控制器 push之前要做些什么其他操作 都写在这里</span></div><div class="line">[_interactiveTransition setPushConifg:^&#123;</div><div class="line">__<span class="keyword">strong</span> <span class="keyword">typeof</span>(weakSelf) strongSelf = weakSelf ;</div><div class="line">ViewController *vc = [[<span class="built_in">UIStoryboard</span> storyboardWithName:<span class="string">@"Main"</span> bundle:<span class="literal">nil</span>] instantiateViewControllerWithIdentifier:<span class="string">@"ViewController"</span>];</div><div class="line"><span class="keyword">if</span> (transitionAnimationStyle == THTransitionPreAnimationStyleLeafPage) &#123;</div><div class="line">[strongSelf.navigationController th_pushViewController:vc preAnimationStyle:THTransitionPreAnimationStylePage duration:<span class="number">0.3</span> completion:^&#123;</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@" 目前自定义翻页效果的push动画的手势转场有时序bug , 所以禁用"</span>);</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"push 转场执行完毕"</span>);</div><div class="line">&#125;];</div><div class="line">&#125;<span class="keyword">else</span></div><div class="line">&#123;</div><div class="line">[strongSelf.navigationController th_pushViewController:vc preAnimationStyle:transitionAnimationStyle duration:<span class="number">0.3</span> completion:^&#123;</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"push 转场执行完毕"</span>);</div><div class="line">&#125;];</div><div class="line">&#125;</div><div class="line">&#125;];</div><div class="line"><span class="comment">// 将当前控制器绑定到专场代理中 是个弱引用 放心绑 ...</span></div><div class="line">[_interactiveTransition addPanGestureForViewController:<span class="keyword">self</span>];</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>通过传入THTransitionPreAnimationStyle(动画样式枚举值)确定转场动画效果</p>
-</li>
-<li>目前实现的THTransitionPreAnimationStyle效果有:       </li>
-<li>[THTransitionPreAnimationStylePage]  =  @”page(翻页)”,</li>
-<li>[THTransitionPreAnimationStyleRippluEffect] =  @”tipplu(水波)”,</li>
-<li>[THTransitionPreAnimationStyleSuckEffect] =  @”suck(吸收)”,</li>
-<li>[THTransitionPreAnimationStyleCube] =  @”cube(立方体)”,</li>
-<li>[THTransitionPreAnimationStyleOglFlip]  =  @”oglFlip(翻转)”,</li>
-<li>[THTransitionPreAnimationStyleFade]  =  @”fade(渐变)”,</li>
-<li>[THTransitionPreAnimationStyleMoveIn]  =  @”moveIn(移入)”,</li>
-<li>[THTransitionPreAnimationStylePush]  =  @”push(推入)”,</li>
-<li>[THTransitionPreAnimationStyleReveal]  = @”reveal(揭示)”,</li>
-<li>[THTransitionPreAnimationStyleWaterWaveUp] = @”waterWaveUp(波浪上移)”,</li>
-<li>[THTransitionPreAnimationStyleLeafPage]  = @”leafPage(横向翻页)”,</li>
-<li>[THTransitionPreAnimationStyleExplode ] = @”explode(爆裂)”,</li>
-</ul>
+
+<ul><li>引入UINavigationController+THTransitionSupportExtension.h头文件,若要使用手势转场,还需要引入THInteractiveTransition.h头文件</li><br><li>调用方法如下, 也可以直接看Demo中的ViewController.m文件</li><br></ul>
+
+<p></p></div><div id="wmd-preview-section-11651" class="wmd-preview-section preview-content"><p></p>
+<pre class="prettyprint hljs-dark"><code class="language-objectivec hljs"><span class="hljs-comment">//  push动画调用</span><br>- (<span class="hljs-keyword">IBAction</span>)pushClk:(<span class="hljs-keyword">id</span>)sender<br>{<br>    ViewController *vc = [[<span class="hljs-built_in">UIStoryboard</span> storyboardWithName:<span class="hljs-string">@"Main"</span> bundle:<span class="hljs-literal">nil</span>] instantiateViewControllerWithIdentifier:<span class="hljs-string">@"ViewController"</span>];<br>    <span class="hljs-comment">// 转场动画调用 就这一句话 通过transitionAnimationStyle枚举值传入动画类型</span><br>    [<span class="hljs-keyword">self</span><span class="hljs-variable">.navigationController</span> th_pushViewController:vc preAnimationStyle:transitionAnimationStyle duration:<span class="hljs-number">0.6</span> completion:^{<br>        <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"push 转场执行完毕"</span>);<br>    }];<br>}<br><span class="hljs-comment">// pop动画调用</span><br>- (<span class="hljs-keyword">IBAction</span>)popClk:(<span class="hljs-keyword">id</span>)sender<br>{<br><br>    [<span class="hljs-keyword">self</span><span class="hljs-variable">.navigationController</span> th_popViewControllerPreAnimationStyle:transitionAnimationStyle duration:<span class="hljs-number">0.6</span> completion:^{<br>        <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"pop 转场执行完毕"</span>);<br>    }];<br>}<br><br><span class="hljs-comment">// 手势转场使用方法</span><br>- (<span class="hljs-keyword">void</span>)settingInteractiveTransitionDelegate<br>{<br>    _interactiveTransition = [[THInteractiveTransition alloc] init];<br>    <span class="hljs-comment">//绑定手势方向是对应push 还是pop</span><br>    [_interactiveTransition bindingTransitionType:THInteractiveTransitionTypePop  withGestureDirection:THInteractiveTransitionGestureDirectionRight];<br>    [_interactiveTransition bindingTransitionType:THInteractiveTransitionTypePush  withGestureDirection:THInteractiveTransitionGestureDirectionLeft];<br><br>    __<span class="hljs-keyword">weak</span> <span class="hljs-keyword">typeof</span>(<span class="hljs-keyword">self</span>) weakSelf = <span class="hljs-keyword">self</span> ;<br>    <span class="hljs-comment">//设置手势转场的转场动画样式</span><br>    _interactiveTransition<span class="hljs-variable">.popStyle</span> = transitionAnimationStyle ;<br>    <span class="hljs-comment">//push 到那个控制器 push之前要做些什么其他操作 都写在这里</span><br>    [_interactiveTransition setPushConifg:^{<br>        __<span class="hljs-keyword">strong</span> <span class="hljs-keyword">typeof</span>(weakSelf) strongSelf = weakSelf ;<br>        ViewController *vc = [[<span class="hljs-built_in">UIStoryboard</span> storyboardWithName:<span class="hljs-string">@"Main"</span> bundle:<span class="hljs-literal">nil</span>] instantiateViewControllerWithIdentifier:<span class="hljs-string">@"ViewController"</span>];<br>        <span class="hljs-keyword">if</span> (transitionAnimationStyle == THTransitionPreAnimationStyleLeafPage) {<br>            [strongSelf<span class="hljs-variable">.navigationController</span> th_pushViewController:vc preAnimationStyle:THTransitionPreAnimationStylePage duration:<span class="hljs-number">0.3</span> completion:^{<br>                <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@" 目前自定义翻页效果的push动画的手势转场有时序bug , 所以禁用"</span>);<br>                <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"push 转场执行完毕"</span>);<br>            }];<br>        }<span class="hljs-keyword">else</span><br>        {<br>        [strongSelf<span class="hljs-variable">.navigationController</span> th_pushViewController:vc preAnimationStyle:transitionAnimationStyle duration:<span class="hljs-number">0.3</span> completion:^{<br>            <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"push 转场执行完毕"</span>);<br>        }];<br>        }<br>    }];<br>    <span class="hljs-comment">// 将当前控制器绑定到专场代理中 是个弱引用 放心绑 ...</span><br>    [_interactiveTransition addPanGestureForViewController:<span class="hljs-keyword">self</span>];<br><br>}<br></code></pre>
+
+<p><ul><li>通过传入THTransitionPreAnimationStyle(动画样式枚举值)确定转场动画效果</li></ul></p>
+<p><li>目前实现的THTransitionPreAnimationStyle效果有: <br></li></p>
+<p><ul></ul></p>
+<p><li>[THTransitionPreAnimationStylePage]  =  @”page(翻页)”,</li></p>
+<p><li>[THTransitionPreAnimationStyleRippluEffect] =  @”tipplu(水波)”,</li></p>
+<p><li>[THTransitionPreAnimationStyleSuckEffect] =  @”suck(吸收)”,</li></p>
+<p><li>[THTransitionPreAnimationStyleCube] =  @”cube(立方体)”,</li></p>
+<p><li>[THTransitionPreAnimationStyleOglFlip]  =  @”oglFlip(翻转)”,</li></p>
+<p><li>[THTransitionPreAnimationStyleFade]  =  @”fade(渐变)”,</li></p>
+<p><li>[THTransitionPreAnimationStyleMoveIn]  =  @”moveIn(移入)”,</li></p>
+<p><li>[THTransitionPreAnimationStylePush]  =  @”push(推入)”,</li></p>
+<p><li>[THTransitionPreAnimationStyleReveal]  = @”reveal(揭示)”,</li></p>
+<p><li>[THTransitionPreAnimationStyleWaterWaveUp] = @”waterWaveUp(波浪上移)”,</li></p>
+<p><li>[THTransitionPreAnimationStyleLeafPage]  = @”leafPage(横向翻页)”,</li></p>
+<p><li>[THTransitionPreAnimationStyleExplode ] = @”explode(爆裂)”,</li><br></p></div><div id="wmd-preview-section-footnotes" class="preview-content"></div><p></p>
 
     </div>
     <footer>
@@ -185,7 +193,7 @@ with(document)0[
     <aside id="sidebar" class="alignright">
   
 <div class="widget tagcloud">
-  <h3 class="title">标签云</h3>
+  <h3 class="title">Tag Cloud</h3>
   <div class="entry">
     <a href="/tags/KVO/" style="font-size: 10px;">KVO</a> <a href="/tags/UIBezierPath/" style="font-size: 10px;">UIBezierPath</a> <a href="/tags/UITextField/" style="font-size: 15px;">UITextField</a> <a href="/tags/runloop/" style="font-size: 10px;">runloop</a> <a href="/tags/个人小项目/" style="font-size: 20px;">个人小项目</a> <a href="/tags/文件操作/" style="font-size: 10px;">文件操作</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a>
   </div>
