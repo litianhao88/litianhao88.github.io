@@ -87,59 +87,13 @@
     </p>
   <p class="article-time">
     <time datetime="2016-01-15T14:35:10.000Z" itemprop="datePublished">2016-01-15</time>
-    Update date:<time datetime="2016-07-07T06:09:08.000Z" itemprop="dateModified">2016-07-07</time>
+    Update date:<time datetime="2016-07-07T06:09:58.000Z" itemprop="dateModified">2016-07-07</time>
     
   </p>
 </header>
     <div class="entry">
 		
-        <p>&lt;!DOCTYPE html&gt;<html><head><title>THLinkageTable_MultiLevel</title><meta charset="utf-8"><link href="https://dn-maxiang.qbox.me/res-min/themes/marxico.css" rel="stylesheet"><style></style></head><body><div id="preview-contents" class="note-content"><br>                        <div id="wmd-preview" class="preview-content"></div><br>                    <div id="wmd-preview-section-13" class="wmd-preview-section preview-content"></div><div id="wmd-preview-section-15" class="wmd-preview-section preview-content"></div></div></body></html></p>
-<h1 id="thlinkagetablemultilevel">THLinkageTable_MultiLevel</h1>
-
-<p><div id="wmd-preview-section-16" class="wmd-preview-section preview-content"></div></p>
-<h2 id="多级联动选择省市表视图实现了一个可以按照树形层级关系无限向下读取信息的model并可以向uiview那样按照继承链从下向上或从上向下查找节点">多级联动选择省市表视图,实现了一个可以按照树形层级关系无限向下读取信息的model,并可以向UIView那样按照继承链从下向上或从上向下查找节点</h2>
-
-<p><div id="wmd-preview-section-17" class="wmd-preview-section preview-content"></div></p>
-<h2 id="多级模型的组织结构">多级模型的组织结构</h2>
-
-<p><div id="wmd-preview-section-18" class="wmd-preview-section preview-content"></div></p>
-<h4 id="thaddressviewmodel">THAddressViewModel</h4>
-
-<ul><li>负责从plist文件中加载并解析出address模型,并构建树形数据结构(其中节点填充的都是THAddressModel)</li><br><li>维护一个记载了所有被选择省市模型的数组</li><br></ul>
-
-<p><div id="wmd-preview-section-19" class="wmd-preview-section preview-content"></div></p>
-<h4 id="thaddressmodel">THAddressModel</h4>
-
-<ul><li>记载省市名称及以及用户拼音简写搜索的拼音简写名称</li><br><li>提供一个标记当前模型是否被选择标识位</li><br><li>具有指向父模型的指针以及维护一个保存子模型的数组</li><br><li>提供两个实例方法,分别可以从本节点向上或向下遍历,并提供一个block传入接口,让外界可以在遍历过程中对每个符合条件的节点进行操作</li><br></ul>
-
-<p><div id="wmd-preview-section-20" class="wmd-preview-section preview-content"></div></p>
-<h2 id="显示模块">显示模块</h2>
-
-<p><div id="wmd-preview-section-21" class="wmd-preview-section preview-content"></div></p>
-<h4 id="显示模块用tableview来做-实现多级下拉效果具体思路就是非叶子节点用sectionheaderview展示点击sectionheaderview取出本section的子节点数据-用一个新的tableview加载子节点数组叶子节点的model用cell展示">显示模块用tableview来做, 实现多级下拉效果,具体思路就是非叶子节点用sectionHeaderView展示,点击sectionHeaderView取出本section的子节点数据, 用一个新的tableview加载子节点数组,叶子节点的model用cell展示</h4>
-
-<p><div id="wmd-preview-section-22" class="wmd-preview-section preview-content"></div></p>
-<h2 id="只要按照addressplist文件的的层级格式命名-可以无限写下去-thaddressviewmodel会自动加载并建立准确的对应的树形层级结构供tableview展示">只要按照address.plist文件的的层级格式命名 , 可以无限写下去, THAddressViewModel会自动加载并建立准确的对应的树形层级结构供tableview展示</h2>
-
-<p><div id="wmd-preview-section-23" class="wmd-preview-section preview-content"></div></p>
-<h2 id="具体使用方法">具体使用方法</h2>
-
-<p>在控制器中引入两个头文件 <br><br>import “THAddressViewModel.h” <br><br>import “THLinkageTableBasicView.h”</p>
-
-<p>添加THLinkageTableBasicView为子视图</p>
-
-<p><div id="wmd-preview-section-24" class="wmd-preview-section preview-content"></div></p>
-<pre class="prettyprint hljs-dark"><code class="language-objectivec hljs">- (<span class="hljs-keyword">void</span>)addAddressTab<br>{<br>THLinkageTableBasicView *addressTab = [[THLinkageTableBasicView alloc] initWithFrame:<span class="hljs-built_in">CGRectMake</span>(<span class="hljs-number">0</span>, <span class="hljs-number">64</span>, <span class="hljs-keyword">self</span><span class="hljs-variable">.view</span><span class="hljs-variable">.bounds</span><span class="hljs-variable">.size</span><span class="hljs-variable">.width</span>, <span class="hljs-keyword">self</span><span class="hljs-variable">.view</span><span class="hljs-variable">.bounds</span><span class="hljs-variable">.size</span><span class="hljs-variable">.height</span> - <span class="hljs-number">64</span> )];<br>[addressTab changeModel:<span class="hljs-literal">YES</span>];<br>addressTab<span class="hljs-variable">.shouldShowSearchBar</span> = <span class="hljs-literal">YES</span> ;<br>_addressTab = addressTab ;<br><br>[<span class="hljs-keyword">self</span><span class="hljs-variable">.view</span> addSubview:addressTab];<br><br>}<br></code></pre>
-
-<p>在address.plist文件中按原来格式及key值填写自己想要展示的信息</p>
-
-<p>注册一个改变选择模型的通知 , 可以在这个通知回调中做刷新UI的操作</p>
-
-<p><div id="wmd-preview-section-25" class="wmd-preview-section preview-content"></div></p>
-<pre class="prettyprint hljs-dark"><code class="language-objectivec hljs">__<span class="hljs-keyword">weak</span> <span class="hljs-keyword">typeof</span>(<span class="hljs-keyword">self</span>) weakSelf = <span class="hljs-keyword">self</span> ;<br>_observer = [[<span class="hljs-built_in">NSNotificationCenter</span> defaultCenter] addObserverForName:<span class="hljs-string">@"changeText"</span> object:<span class="hljs-literal">nil</span> queue:[<span class="hljs-built_in">NSOperationQueue</span> mainQueue] usingBlock:^(<span class="hljs-built_in">NSNotification</span> * _Nonnull note) {<br>weakSelf<span class="hljs-variable">.titleLbl</span><span class="hljs-variable">.text</span> = note<span class="hljs-variable">.object</span> ;<br>}];<br></code></pre>
-
-<p></p><p>本项目还只是一个demo 没有做完善的封装, 接口不友好, 需改善的地方较多,只做技术交流使用</p><div id="wmd-preview-section-footnotes" class="preview-content"></div><p></p>
-
+        <html><head><title>THLinkageTable_MultiLevel</title><meta charset="utf-8"><link href="https://dn-maxiang.qbox.me/res-min/themes/marxico.css" rel="stylesheet"><style></style></head><body><div id="preview-contents" class="note-content"><br>                        <div id="wmd-preview" class="preview-content"></div><br>                    <div id="wmd-preview-section-13" class="wmd-preview-section preview-content"></div><div id="wmd-preview-section-15" class="wmd-preview-section preview-content"><br><br><h1 id="thlinkagetablemultilevel">THLinkageTable_MultiLevel</h1><br><br></div><div id="wmd-preview-section-16" class="wmd-preview-section preview-content"><br><br><h2 id="多级联动选择省市表视图实现了一个可以按照树形层级关系无限向下读取信息的model并可以向uiview那样按照继承链从下向上或从上向下查找节点">多级联动选择省市表视图,实现了一个可以按照树形层级关系无限向下读取信息的model,并可以向UIView那样按照继承链从下向上或从上向下查找节点</h2><br><br></div><div id="wmd-preview-section-17" class="wmd-preview-section preview-content"><br><br><h2 id="多级模型的组织结构">多级模型的组织结构</h2><br><br></div><div id="wmd-preview-section-18" class="wmd-preview-section preview-content"><br><br><h4 id="thaddressviewmodel">THAddressViewModel</h4><br><br><ul><li>负责从plist文件中加载并解析出address模型,并构建树形数据结构(其中节点填充的都是THAddressModel)</li><br><li>维护一个记载了所有被选择省市模型的数组</li><br></ul><br><br></div><div id="wmd-preview-section-19" class="wmd-preview-section preview-content"><br><br><h4 id="thaddressmodel">THAddressModel</h4><br><br><ul><li>记载省市名称及以及用户拼音简写搜索的拼音简写名称</li><br><li>提供一个标记当前模型是否被选择标识位</li><br><li>具有指向父模型的指针以及维护一个保存子模型的数组</li><br><li>提供两个实例方法,分别可以从本节点向上或向下遍历,并提供一个block传入接口,让外界可以在遍历过程中对每个符合条件的节点进行操作</li><br></ul><br><br></div><div id="wmd-preview-section-20" class="wmd-preview-section preview-content"><br><br><h2 id="显示模块">显示模块</h2><br><br></div><div id="wmd-preview-section-21" class="wmd-preview-section preview-content"><br><br><h4 id="显示模块用tableview来做-实现多级下拉效果具体思路就是非叶子节点用sectionheaderview展示点击sectionheaderview取出本section的子节点数据-用一个新的tableview加载子节点数组叶子节点的model用cell展示">显示模块用tableview来做, 实现多级下拉效果,具体思路就是非叶子节点用sectionHeaderView展示,点击sectionHeaderView取出本section的子节点数据, 用一个新的tableview加载子节点数组,叶子节点的model用cell展示</h4><br><br></div><div id="wmd-preview-section-22" class="wmd-preview-section preview-content"><br><br><h2 id="只要按照addressplist文件的的层级格式命名-可以无限写下去-thaddressviewmodel会自动加载并建立准确的对应的树形层级结构供tableview展示">只要按照address.plist文件的的层级格式命名 , 可以无限写下去, THAddressViewModel会自动加载并建立准确的对应的树形层级结构供tableview展示</h2><br><br></div><div id="wmd-preview-section-23" class="wmd-preview-section preview-content"><br><br><h2 id="具体使用方法">具体使用方法</h2><br><br><p>在控制器中引入两个头文件 <br><br>import “THAddressViewModel.h” <br><br>import “THLinkageTableBasicView.h”</p><br><br><p>添加THLinkageTableBasicView为子视图</p><br><br></div><div id="wmd-preview-section-24" class="wmd-preview-section preview-content"><br><br><pre class="prettyprint hljs-dark"><code class="language-objectivec hljs">- (<span class="hljs-keyword">void</span>)addAddressTab<br>{<br>THLinkageTableBasicView <em>addressTab = [[THLinkageTableBasicView alloc] initWithFrame:<span class="hljs-built_in">CGRectMake</span>(<span class="hljs-number">0</span>, <span class="hljs-number">64</span>, <span class="hljs-keyword">self</span><span class="hljs-variable">.view</span><span class="hljs-variable">.bounds</span><span class="hljs-variable">.size</span><span class="hljs-variable">.width</span>, <span class="hljs-keyword">self</span><span class="hljs-variable">.view</span><span class="hljs-variable">.bounds</span><span class="hljs-variable">.size</span><span class="hljs-variable">.height</span> - <span class="hljs-number">64</span> )];<br>[addressTab changeModel:<span class="hljs-literal">YES</span>];<br>addressTab<span class="hljs-variable">.shouldShowSearchBar</span> = <span class="hljs-literal">YES</span> ;<br>_addressTab = addressTab ;<br><br>[<span class="hljs-keyword">self</span><span class="hljs-variable">.view</span> addSubview:addressTab];<br><br>}<br></em></code></pre><br><br><p>在address.plist文件中按原来格式及key值填写自己想要展示的信息</p><br><br><p>注册一个改变选择模型的通知 , 可以在这个通知回调中做刷新UI的操作</p><br><br></div><div id="wmd-preview-section-25" class="wmd-preview-section preview-content"><br><br><pre class="prettyprint hljs-dark"><code class="language-objectivec hljs">__<span class="hljs-keyword">weak</span> <span class="hljs-keyword">typeof</span>(<span class="hljs-keyword">self</span>) weakSelf = <span class="hljs-keyword">self</span> ;<br>_observer = [[<span class="hljs-built_in">NSNotificationCenter</span> defaultCenter] addObserverForName:<span class="hljs-string">@”changeText”</span> object:<span class="hljs-literal">nil</span> queue:[<span class="hljs-built_in">NSOperationQueue</span> mainQueue] usingBlock:^(<span class="hljs-built_in">NSNotification</span>  _Nonnull note) {<br>weakSelf<span class="hljs-variable">.titleLbl</span><span class="hljs-variable">.text</span> = note<span class="hljs-variable">.object</span> ;<br>}];<br></code></pre><br><br><p>本项目还只是一个demo 没有做完善的封装, 接口不友好, 需改善的地方较多,只做技术交流使用</p></div><div id="wmd-preview-section-footnotes" class="preview-content"></div></div></body></html>
     </div>
     <footer>
         
