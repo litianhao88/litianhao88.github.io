@@ -15,7 +15,7 @@
 	})();
 	</script>
   
-  <title>THMediaPlayeCacher框架简介 | 白驹过隙 点滴于心</title>
+  <title>KVO随笔 | 白驹过隙 点滴于心</title>
   <meta name="author" content="李天昊">
   
   <meta name="description" content="李天昊的技术博">
@@ -23,7 +23,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="THMediaPlayeCacher框架简介"/>
+  <meta property="og:title" content="KVO随笔"/>
   <meta property="og:site_name" content="白驹过隙 点滴于心"/>
 
   
@@ -79,44 +79,30 @@
   <div class="post-content">
     <header class="article-info clearfix">
   <h1 itemprop="name">
-	THMediaPlayeCacher框架简介
+	KVO随笔
   </h1>
   <p class="article-author">By
     
       <a href="www.yoursite.com" title="李天昊">李天昊</a>
     </p>
   <p class="article-time">
-    <time datetime="2016-05-25T12:15:15.000Z" itemprop="datePublished">2016-05-25</time>
-    Update date:<time datetime="2016-07-07T05:33:49.000Z" itemprop="dateModified">2016-07-07</time>
+    <time datetime="2016-05-25T12:22:10.000Z" itemprop="datePublished">2016-05-25</time>
+    Update date:<time datetime="2016-07-07T05:43:47.000Z" itemprop="dateModified">2016-07-07</time>
     
   </p>
 </header>
     <div class="entry">
 		
-        <p>#THMediaPlayeCacher</p>
-<p>#####核心功能在THMediaCachePalyer文件夹中 , 实现了对网络媒体资源进行边下边播,磁盘缓存网络媒体资源,亮点是可以缓存断点文件(一般主流视频分享app的做法是视频终端下载就不缓存了 , 而本框架可以缓存任意起始点任意长度的媒体文件), 播放音频或视频的碎片文件.</p>
-<p>#####同时实现了播放音乐时歌词Y轴滚动,同步X轴颜色填充功能 ,歌单轮播功能 , 及后台播放功能(由于笔者业余时间有限 , 这个功能并没有抽成单独的模块,具体实现在THLrcDisplayView类中,有兴趣的可以看下)</p>
-<p>###THMediaPlayeCacher结构</p>
-<p>####THMediaPlayer<br>对外接口类 , 使用本框架功能只要和这个类交互就够了 , 具体的调用方法都写在demo中一个叫THMusicPlayController的类中.</p>
-<p>#####需要给这个类传的参数:</p>
-<ul>
-<li>播放媒体文件的url</li>
-<li>播放音乐时的底部控制条的superView</li>
-<li>播放界面的superView(歌词 , 歌手图片 , 视频窗口需要展示在哪个view上 就是这个参数决定)</li>
-<li>设置一些底部控制条的按钮回调,都是block属性 ,可以通过这些block属性得到当前播放进度, 控制条上所有按钮及进度条拖动的事件信号</li>
-</ul>
-<p>####THMediaDataProvider<br>为THMediaPlayer提供媒体数据的类, 该类根据播放文件的url调用THMediaDataCacheManager类中的方法,得知本地有没有缓存文件, 有几段 , 是否完整, 如果是片段缓存,应该在哪一段用缓存播放, 哪一段加载网络资源 .</p>
-<p>####MediaDataNetDownloadTask<br>MediaDataNetDownloadTask是THMediaDataProvider持有的属性 ,  当THMediaDataProvider需要加载网络数据时,就用MediaDataNetDownloadTask开启下载任务 , MediaDataNetDownloadTask实时拼接下载到的数据并写入temp文件夹中的一个临时文件 , 并用代理方法通知THMediaDataProvider接收下载后的数据提供给THMediaPlayer播放,每次task完成时,将这个临时文件合并到缓存中url对应的文件夹中 , 这样可以做到断点数据的缓存 .</p>
-<p>####THCoreDataHelper<br>coreData操作工具类 , 本框架构建了一个coreData文件用来存储可用的缓存文件的索引值 , 创建日期 ,文件大小等在程序运行过程中必须的缓存文件参数, 这个类直接又下面的THMediaDataCacheManager调用</p>
-<p>####THMediaDataCacheManager<br>实现断点缓存的核心类 , 不同的媒体文件存在不同的文件夹下 , 文件夹用媒体文件的url的MD5摘要字符串命名 , 相同url下载下来的文件 有这个类合并到对应的文件夹下 , 如果两个断点文件之间有交集, 就由这个类负责将他们拼成一个文件, 并更新索引文件 . 这个类还提供基于urlKey值详细的查询方法 , 可以用url到内存中查找到可用的资源及资源的每段索引范围</p>
-<p>###THMediaPlayeCacher运行流程</p>
-<ul>
-<li>THMediaPlayer接收Url参数, 用THMediaDataCacheManager类去缓存中查找有没有可用的媒体文件 :</li>
-<li>如果有 ,并且是完成文件 , 那么就把url转为file:协议头的本地路径 , 直接播放本地文件 , 这时不会用到THMediaDataProvider和MediaDataNetDownloadTask.</li>
-<li>如果有 , 但是是片段文件 , 就把url的协议头替换成自定义的其他字符串, 这样AVplayer的urlAsset通过错误的url加载不到数据,就会调用THMediaDataProvider实现的代理方法 , 在这个代理方法中 , 可以通过THMediaDataCacheManager的类方法拿到所有缓存片段文件的range值(这个值表示可用的缓存文件在整个媒体文件中的起始偏移量和长度), 通过写range值,THMediaDataProvider就能知道哪一段数据该通过MediaDataNetDownloadTask去网络下载  ,哪一段数据直接加载本地文件进行播放 , (当然 其中还涉及到了文件类型信息的获取和拼接) ,这样就实现了不完整文件的播放.</li>
-<li>如果本地没有可用的缓存 , 那么直接让MediaDataNetDownloadTask开启一个下载任务去网络上下载 , 变下边存到沙盒中 , 并且在MediaDataNetDownloadTask的receive data代理方法中通知THMediaDataProvider去指定文件内读取数据提供给avplayer播放</li>
-</ul>
-<p>###该项目本身就是个使用THMediaPlayeCacher的Demo , 目前仍有几个不可忽视的bug存在 , 基于笔者时间有限 , 可能尚需不少事日方能完善.</p>
+        <p>什么是观察者模式???<br>A对B的变化感兴趣，就注册为B的观察者，当B发生变化时通知A，告知B发生了变化。这就是观察者模式。<br>观察者模式定义了一种一对多的依赖关系，让多个观察者对象同时监听某一个主题对象。这个主题对象在状态上发生变化时，会通知所有观察者对象，使它们能够自动更新自己或者做出相应的一些动作。在IOS开发中我们接触到观察者模式的实现方式有NSNotificationCenter、KVO等.</p>
+<p>通知中心<br>以NSNotificationCenter为中心，观察者往Center中注册对某个主题对象的变化感兴趣，主题对象通过NSNotificationCenter进行变化广播。所有的观察和监听行为都向同一个中心注册，所有对象的变化也都通过同一个中心向外广播。</p>
+<p>通知中心执行顺序</p>
+<p>通过NSNotificationCenter的addObserver:selector:name:object接口来注册通知中心.<br>被观察的对象，通过postNotificationName:object:userInfo:向通知中心发送某一类型通知.<br>当有通知来的时候，Center会调用观察者注册的接口来广播通知，同时传递存储着更改内容的NSNotification对象.<br>当该通知不再使用时，可以在dealloc方法里removeObserver:删除观察者.<br>KVO键值观察<br>这是一个典型的观察者模式,观察者在键值改变时会得到通知.<br>NSKeyValueObserving非正式协议定义了一种机制,它允许对象去监听其它对象的某个属性的修改.NSObject提供了一个NSKeyValueObserving协议的默认实现,它为所有对象提供了一种自动发送修改通知的能力.我们可以通过禁用自动发送通知并使用这个协议提供的方法来手动实现通知的发送,以便更精确地去处理通知.</p>
+<p>KVO的使用步骤</p>
+<p>注册需要观察的对象的属性addObserver:forKeyPath:options:context:.<br>实现observeValueForKeyPath:ofObject:change:context:方法，这个方法当观察的属性变化时会自动调用.在这个方法中还通过NSKeyValueObservingOptionNew这个参数要求把新值在dictionary中传递过来.<br>取消注册观察removeObserver:forKeyPath:context:.<br>手动设置KVO</p>
+<p>//关闭某key值的KVO<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">+(<span class="built_in">BOOL</span>)automaticallyNotifiesObserversForKey:(<span class="built_in">NSString</span> *)key &#123;</div><div class="line"><span class="built_in">BOOL</span> automatic = <span class="literal">YES</span>;</div><div class="line"><span class="keyword">if</span> ([key isEqualToString:<span class="string">@"age"</span>]) &#123;</div><div class="line">automatic = <span class="literal">NO</span>;</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">automatic = [<span class="keyword">super</span> automaticallyNotifiesObserversForKey:key];</div><div class="line">&#125; <span class="keyword">return</span> automatic;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>//重写setter方法手动设置KVO<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)setAge:(<span class="keyword">int</span>)age &#123;</div><div class="line"><span class="comment">//手动设置KVO</span></div><div class="line"><span class="keyword">if</span> (_age != age) &#123;</div><div class="line">        </div><div class="line">[<span class="keyword">self</span> willChangeValueForKey:<span class="string">@"age"</span>];</div><div class="line">        </div><div class="line">_age = age;</div><div class="line">        </div><div class="line">[<span class="keyword">self</span> didChangeValueForKey:<span class="string">@"age"</span>];</div><div class="line">        </div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>KVO的实现原理</p>
+<p>当某一个类的实例第一次使用KVO的时候，系统就会在运行期间动态的创建该类的一个派生类，该类的命名规则一般是以NSKVONotifying为前缀，以原本的类名为后缀。并且将原型的对象的isa指针指向该派生类。同时在派生类中重载了使用KVO的属性的setter方法，在重载的setter方法中实现真正的通知机制，正如前面我们手动实现KVO一样。这么做是基于设置属性会调用 setter 方法，而通过重写就获得了 KVO 需要的通知机制。当然前提是要通过遵循 KVO 的属性设置方式来变更属性值，如果仅是直接修改属性对应的成员变量，是无法实现 KVO 的。</p>
 
     </div>
     <footer>
@@ -124,7 +110,7 @@
         
   
   <div class="tags">
-    <a href="/tags/个人小项目/">个人小项目</a>
+    <a href="/tags/KVO/">KVO</a>
   </div>
 
 		<div class="bdsharebuttonbox">
@@ -172,10 +158,8 @@ with(document)0[
 
  <nav id="pagination" >
     
-    <a href="/2016/05/25/KVC/" class="alignleft prev" title="KVO随笔">KVO随笔</a>
     
-    
-    <a href="/2016/03/25/THTransitionAnimation/" class="alignright next" title="THTransitionAnimation框架简介">THTransitionAnimation框架简介</a>
+    <a href="/2016/05/25/THMediaPlayeCacher/" class="alignright next" title="THMediaPlayeCacher框架简介">THMediaPlayeCacher框架简介</a>
     
     <div class="clearfix"></div>
 </nav>
@@ -185,7 +169,7 @@ with(document)0[
 	
 	<section id="comment">
 		<!-- 多说评论框 start -->
-		<div class="ds-thread" data-thread-key="2016/05/25/THMediaPlayeCacher/" data-title="THMediaPlayeCacher框架简介" data-url="www.yoursite.com/2016/05/25/THMediaPlayeCacher/"></div>
+		<div class="ds-thread" data-thread-key="2016/05/25/KVC/" data-title="KVO随笔" data-url="www.yoursite.com/2016/05/25/KVC/"></div>
 		<!-- 多说评论框 end -->
 		<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 		<script type="text/javascript">
